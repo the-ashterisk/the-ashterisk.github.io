@@ -1,12 +1,15 @@
 import { render, screen } from '@testing-library/react'
-import App from './App'
 import { ThemeProvider } from './theme/ThemeProvider'
+import App from './App'
 
-test('renders app root', () => {
+test('composes the full landing page', () => {
   render(
     <ThemeProvider>
       <App />
     </ThemeProvider>,
   )
-  expect(screen.getByTestId('app-root')).toBeInTheDocument()
+  expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument() // hero
+  expect(screen.getByRole('heading', { name: /things i've built/i })).toBeInTheDocument()
+  expect(screen.getByRole('heading', { name: /the channel/i })).toBeInTheDocument()
+  expect(screen.getByRole('heading', { name: /follow the journey/i })).toBeInTheDocument()
 })

@@ -66,19 +66,19 @@ export function Hero() {
             <img src={ash} alt="Ash, the Ashterisk mascot" className="h-full w-full object-cover" />
           </div>
           <FloatingBadge className="right-0 top-6" delay={0}>
-            <Bot size={22} className="text-accent" />
+            <Bot size={22} className="text-accent" aria-hidden />
           </FloatingBadge>
           <FloatingBadge className="left-0 top-1/3" delay={0.8}>
-            <Smartphone size={22} className="text-accent" />
+            <Smartphone size={22} className="text-accent" aria-hidden />
           </FloatingBadge>
           <FloatingBadge className="bottom-8 right-4" delay={1.6}>
-            <Code2 size={22} className="text-accent" />
+            <Code2 size={22} className="text-accent" aria-hidden />
           </FloatingBadge>
           <FloatingBadge className="bottom-0 left-8" delay={2.2}>
-            <SiGithub size={22} className="text-accent" />
+            <SiGithub size={22} className="text-accent" aria-hidden />
           </FloatingBadge>
           <FloatingBadge className="left-1/2 top-0" delay={1.2}>
-            <Sparkles size={22} className="text-accent" />
+            <Sparkles size={22} className="text-accent" aria-hidden />
           </FloatingBadge>
         </div>
       </div>

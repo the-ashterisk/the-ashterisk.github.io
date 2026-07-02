@@ -24,7 +24,7 @@ export function ProjectCard({ project }: { project: Project }) {
           href={project.repoUrl}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex items-center gap-2 font-display text-sm font-medium hover:text-accent"
+          className="inline-flex items-center gap-2 rounded font-display text-sm font-medium hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >
           <SiGithub size={16} /> View on GitHub
         </a>
@@ -33,7 +33,7 @@ export function ProjectCard({ project }: { project: Project }) {
             href={project.videoUrl}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 font-display text-sm font-medium text-text-secondary hover:text-accent"
+            className="inline-flex items-center gap-2 rounded font-display text-sm font-medium text-text-secondary hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           >
             <Play size={16} /> Watch the build
           </a>
