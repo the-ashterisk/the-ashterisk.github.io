@@ -1,0 +1,26 @@
+:root {
+  --bg: #ffffff;
+  --surface: #f2f2f2;
+  --text: #111111;
+  --text-secondary: #666666;
+  --accent: #ff5244;
+  --accent-light: #ffe8e6;
+  --dot: #e0e0e0;
+}
+
+.dark {
+  --bg: #0b0b0f;
+  --surface: #15151b;
+  --text: #f5f5f5;
+  --text-secondary: #9a9aa5;
+  --accent: #ff5244;
+  --accent-light: #2a1512;
+  --dot: rgba(255, 255, 255, 0.06);
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
