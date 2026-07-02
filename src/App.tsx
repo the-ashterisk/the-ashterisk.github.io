@@ -1,3 +1,9 @@
+import { Nav } from './components/Nav'
+
 export default function App() {
-  return <main data-testid="app-root">ashterisk</main>
+  return (
+    <div id="top" data-testid="app-root">
+      <Nav />
+    </div>
+  )
 }
