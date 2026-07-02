@@ -8,3 +8,4 @@ Task 2: complete (commit 635175e, review clean; minor: persist-on-mount harmless
 Task 3: complete (commits 635175e..facbd0f, review clean; reduced-motion tests added & proven non-vacuous)
 Task 4: complete (commit bf79816, review clean, no issues)
 Task 5: complete (bf79816..15fcf8c; react-icons brand marks, mascot asset, primitives; debug file removed)
+Task 6: complete (commit b37f6c6, review clean, no issues)
