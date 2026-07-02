@@ -1,32 +1,27 @@
-# React + TypeScript + Vite
+# ashterisk.github.io
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Landing page for [Ashterisk](https://www.youtube.com/@the.ashterisk) — AI build breakdowns,
+tool reviews, and one engineer's Android → AI systems journey.
 
-Currently, two official plugins are available:
+**Live:** https://the-ashterisk.github.io
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Stack
+Vite · React · TypeScript · Tailwind CSS · Framer Motion · Lenis.
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+## Develop
+```bash
+npm install
+npm run dev      # local dev server
+npm test         # run unit tests
+npm run build    # production build to dist/
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Add a project
+Append one object to `src/data/projects.ts` — no component changes needed:
+```ts
+{ title: '...', description: '...', tags: ['...'], repoUrl: 'https://github.com/...', videoUrl: '...' }
+```
+
+## Deploy
+Pushing to `main` triggers `.github/workflows/deploy.yml`, which builds and publishes to
+GitHub Pages. In the repo: Settings → Pages → Source = "GitHub Actions" (one-time setup).
