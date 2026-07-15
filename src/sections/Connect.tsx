@@ -25,7 +25,7 @@ export function Connect() {
               </Button>
             </Magnetic>
           </div>
-          <div className="mx-auto mt-10 grid max-w-md grid-cols-2 gap-3 sm:grid-cols-4">
+          <div className="mx-auto mt-10 flex max-w-md flex-wrap justify-center gap-3">
             {socialLinks.map((link) => (
               <LinkButton key={link.id} link={link} />
             ))}
