@@ -11,6 +11,7 @@ export default {
         'text-secondary': 'var(--text-secondary)',
         accent: 'var(--accent)',
         'accent-light': 'var(--accent-light)',
+        line: 'var(--line)',
       },
       fontFamily: {
         display: ['"Space Grotesk"', 'sans-serif'],

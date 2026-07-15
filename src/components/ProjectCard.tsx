@@ -4,7 +4,7 @@ import type { Project } from '../data/projects'
 
 export function ProjectCard({ project }: { project: Project }) {
   return (
-    <article className="group flex h-full flex-col rounded-2xl border border-white/10 bg-surface p-6 transition-[transform,border-color,box-shadow] duration-300 ease-out hover:-translate-y-1.5 hover:border-accent/40 hover:shadow-[0_16px_40px_-16px_rgba(255,82,68,0.35)]">
+    <article className="group flex h-full flex-col rounded-2xl border border-line bg-surface p-6 transition-[transform,border-color,box-shadow] duration-300 ease-out hover:-translate-y-1.5 hover:border-accent/40 hover:shadow-[0_16px_40px_-16px_rgba(255,82,68,0.35)]">
       <h3 className="flex items-start justify-between gap-2 font-display text-xl font-bold">
         {project.title}
         <ArrowUpRight

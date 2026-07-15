@@ -18,7 +18,7 @@ export function Nav() {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b border-white/5 bg-bg/70 backdrop-blur-md transition-transform duration-300 ease-out ${
+      className={`sticky top-0 z-50 border-b border-line bg-bg/70 backdrop-blur-md transition-transform duration-300 ease-out ${
         hidden ? '-translate-y-full' : 'translate-y-0'
       }`}
     >

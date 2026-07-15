@@ -11,7 +11,7 @@ interface FloatingBadgeProps {
 
 export function FloatingBadge({ children, className = '', delay = 0, depth = 1 }: FloatingBadgeProps) {
   const reduced = usePrefersReducedMotion()
-  const cls = `absolute grid h-12 w-12 place-items-center rounded-xl border border-white/10 bg-surface shadow-lg ${className}`
+  const cls = `absolute grid h-12 w-12 place-items-center rounded-xl border border-line bg-surface shadow-lg ${className}`
   if (reduced) return <div className={cls}>{children}</div>
   return (
     <motion.div

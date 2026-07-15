@@ -9,7 +9,7 @@ import ash from '../assets/ash.png'
 
 export function Connect() {
   return (
-    <footer id="connect" className="border-t border-white/5">
+    <footer id="connect" className="border-t border-line">
       <div className="mx-auto max-w-3xl px-5 py-20 text-center">
         <Reveal>
           <h2 className="font-display text-4xl font-bold sm:text-5xl">
