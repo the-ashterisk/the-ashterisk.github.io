@@ -6,6 +6,7 @@
   --accent: #ff5244;
   --accent-light: #ffe8e6;
   --dot: #e0e0e0;
+  --line: rgba(17, 17, 17, 0.14);
 }
 
 .dark {
@@ -16,6 +17,7 @@
   --accent: #ff5244;
   --accent-light: #2a1512;
   --dot: rgba(255, 255, 255, 0.06);
+  --line: rgba(255, 255, 255, 0.1);
 }
 
 body {

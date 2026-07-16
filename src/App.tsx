@@ -3,10 +3,12 @@ import { Hero } from './sections/Hero'
 import { Projects } from './sections/Projects'
 import { About } from './sections/About'
 import { Connect } from './sections/Connect'
+import { Preloader } from './motion/Preloader'
 
 export default function App() {
   return (
     <div id="top" data-testid="app-root">
+      <Preloader />
       <Nav />
       <main>
         <Hero />

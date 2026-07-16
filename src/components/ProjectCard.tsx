@@ -1,16 +1,18 @@
-import { motion } from 'framer-motion'
-import { Play } from 'lucide-react'
+import { Play, ArrowUpRight } from 'lucide-react'
 import { SiGithub } from 'react-icons/si'
 import type { Project } from '../data/projects'
 
 export function ProjectCard({ project }: { project: Project }) {
   return (
-    <motion.article
-      whileHover={{ y: -6 }}
-      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-      className="flex h-full flex-col rounded-2xl border border-white/10 bg-surface p-6"
-    >
-      <h3 className="font-display text-xl font-bold">{project.title}</h3>
+    <article className="group flex h-full flex-col rounded-2xl border border-line bg-surface p-6 transition-[transform,border-color,box-shadow] duration-300 ease-out hover:-translate-y-1.5 hover:border-accent/40 hover:shadow-[0_16px_40px_-16px_rgba(255,82,68,0.35)]">
+      <h3 className="flex items-start justify-between gap-2 font-display text-xl font-bold">
+        {project.title}
+        <ArrowUpRight
+          size={18}
+          aria-hidden
+          className="mt-1 shrink-0 text-text-secondary transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
+        />
+      </h3>
       <p className="mt-3 flex-1 font-body text-text-secondary">{project.description}</p>
       <div className="mt-4 flex flex-wrap gap-2">
         {project.tags.map((tag) => (
@@ -39,6 +41,6 @@ export function ProjectCard({ project }: { project: Project }) {
           </a>
         )}
       </div>
-    </motion.article>
+    </article>
   )
 }

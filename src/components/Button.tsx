@@ -13,7 +13,7 @@ const base =
 
 const variants = {
   primary: 'bg-accent text-white hover:brightness-110',
-  outline: 'border border-white/20 text-text hover:border-accent',
+  outline: 'border border-line text-text hover:border-accent',
 }
 
 export function Button({ children, href, variant = 'primary', className = '', ariaLabel }: ButtonProps) {

@@ -7,7 +7,7 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (reduced) return
-    const lenis = new Lenis({ duration: 1.1, smoothWheel: true })
+    const lenis = new Lenis({ duration: 1.15, smoothWheel: true, anchors: true })
     let frame = 0
     const raf = (time: number) => {
       lenis.raf(time)

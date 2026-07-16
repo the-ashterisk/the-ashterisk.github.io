@@ -1,18 +1,31 @@
+import { Mail } from 'lucide-react'
 import { Reveal } from '../motion/Reveal'
 import { GradientText } from '../components/GradientText'
 import { LinkButton } from '../components/LinkButton'
-import { socialLinks } from '../data/links'
+import { Button } from '../components/Button'
+import { Magnetic } from '../motion/Magnetic'
+import { socialLinks, EMAIL } from '../data/links'
 import ash from '../assets/ash.png'
 
 export function Connect() {
   return (
-    <footer id="connect" className="border-t border-white/5">
+    <footer id="connect" className="border-t border-line">
       <div className="mx-auto max-w-3xl px-5 py-20 text-center">
         <Reveal>
-          <h2 className="font-display text-3xl font-bold sm:text-4xl">
+          <h2 className="font-display text-4xl font-bold sm:text-5xl">
             Follow the <GradientText>journey</GradientText>
           </h2>
-          <div className="mx-auto mt-8 grid max-w-md grid-cols-2 gap-3 sm:grid-cols-4">
+          <p className="mx-auto mt-4 max-w-md font-body text-lg text-text-secondary">
+            New builds and breakdowns land on YouTube first — everything else is a click away.
+          </p>
+          <div className="mt-8 flex justify-center">
+            <Magnetic>
+              <Button href={`mailto:${EMAIL}`} ariaLabel="Email Ashterisk">
+                <Mail size={18} aria-hidden /> Say hello
+              </Button>
+            </Magnetic>
+          </div>
+          <div className="mx-auto mt-10 flex max-w-md flex-wrap justify-center gap-3">
             {socialLinks.map((link) => (
               <LinkButton key={link.id} link={link} />
             ))}
