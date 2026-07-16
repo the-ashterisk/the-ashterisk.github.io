@@ -23,7 +23,10 @@ jobs:
         with:
           node-version: 20
           cache: npm
-      - run: npm ci
+      # Use `npm install`, not `npm ci`: Vite 8's Rolldown pulls @emnapi/*
+      # optional deps whose patch versions drift across platforms, so strict
+      # lockfile-sync (npm ci) fails intermittently in CI.
+      - run: npm install --no-audit --no-fund
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
