@@ -1,12 +1,12 @@
 import type { ReactNode } from 'react'
 import { ArrowRight } from 'lucide-react'
 import { SiInstagram, SiYoutube } from 'react-icons/si'
-import { INSTAGRAM_PROFILE, YOUTUBE_PROFILE, pagePath, type FreeResource } from '../data/free'
+import { INSTAGRAM_PROFILE, YOUTUBE_PROFILE, pagePath, type ToolkitResource } from '../data/toolkit'
 import { focusRing, outlineButton, solidButton, StaticThemeToggle } from './ui'
 
 const smallLink = `inline-flex min-h-[44px] items-center rounded font-body text-xs text-text-secondary transition-colors hover:text-text ${focusRing}`
 
-function FreeHeader() {
+function ToolkitHeader() {
   return (
     <header className="border-b border-line bg-bg">
       <nav aria-label="Main" className="mx-auto flex max-w-3xl items-center justify-between gap-4 px-4 py-2 sm:px-5">
@@ -17,7 +17,7 @@ function FreeHeader() {
         </a>
         <div className="flex items-center gap-2">
           <a
-            href="/free/"
+            href="/toolkit/"
             className={`grid min-h-[44px] place-items-center rounded-full px-3 font-body text-sm text-text-secondary transition-colors hover:text-text ${focusRing}`}
           >
             Toolkit
@@ -29,7 +29,7 @@ function FreeHeader() {
   )
 }
 
-function FreeFooter({ others }: { others: FreeResource[] }) {
+function ToolkitFooter({ others }: { others: ToolkitResource[] }) {
   const year = new Date().getFullYear()
   return (
     <footer className="border-t border-line">
@@ -90,12 +90,12 @@ function FreeFooter({ others }: { others: FreeResource[] }) {
   )
 }
 
-export function FreeLayout({ children, others = [] }: { children: ReactNode; others?: FreeResource[] }) {
+export function ToolkitLayout({ children, others = [] }: { children: ReactNode; others?: ToolkitResource[] }) {
   return (
     <div id="top" className="flex min-h-screen flex-col">
-      <FreeHeader />
+      <ToolkitHeader />
       <main className="flex-1">{children}</main>
-      <FreeFooter others={others} />
+      <ToolkitFooter others={others} />
     </div>
   )
 }

@@ -1,25 +1,25 @@
 import { ArrowLeft, Download } from 'lucide-react'
 import { SiInstagram, SiYoutube } from 'react-icons/si'
-import { INSTAGRAM_PROFILE, YOUTUBE_PROFILE, filePath, formatDate, type FreeResource } from '../data/free'
+import { INSTAGRAM_PROFILE, YOUTUBE_PROFILE, filePath, formatDate, type ToolkitResource } from '../data/toolkit'
 import { FilePanel } from './FilePanel'
-import { FreeLayout } from './FreeLayout'
+import { ToolkitLayout } from './ToolkitLayout'
 import { focusRing, NoBreakHyphens, outlineButton, solidButton, TypeTag } from './ui'
 
 interface ResourcePageProps {
-  resource: FreeResource
+  resource: ToolkitResource
   raw: string
   html: string
-  others: FreeResource[]
+  others: ToolkitResource[]
 }
 
 const sectionHeading = 'font-display text-sm font-bold uppercase tracking-widest'
 
 export function ResourcePage({ resource: r, raw, html, others }: ResourcePageProps) {
   return (
-    <FreeLayout others={others}>
+    <ToolkitLayout others={others}>
       <article className="mx-auto max-w-3xl px-4 pb-16 pt-8 sm:px-5 sm:pt-12">
         <a
-          href="/free/"
+          href="/toolkit/"
           className={`inline-flex min-h-[44px] items-center gap-1.5 rounded font-body text-sm text-text-secondary transition-colors hover:text-text ${focusRing}`}
         >
           <ArrowLeft size={16} aria-hidden /> Back to the toolkit
@@ -83,6 +83,6 @@ export function ResourcePage({ resource: r, raw, html, others }: ResourcePagePro
           Last updated <time dateTime={r.lastUpdated}>{formatDate(r.lastUpdated)}</time>
         </p>
       </article>
-    </FreeLayout>
+    </ToolkitLayout>
   )
 }

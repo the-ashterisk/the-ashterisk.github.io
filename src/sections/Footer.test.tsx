@@ -61,5 +61,5 @@ test('copyright sits outside the legal navigation', () => {
 test('explore column links to the toolkit', () => {
   render(<Footer />)
   const explore = screen.getByRole('navigation', { name: 'Explore' })
-  expect(within(explore).getByRole('link', { name: 'Toolkit' })).toHaveAttribute('href', '/free/')
+  expect(within(explore).getByRole('link', { name: 'Toolkit' })).toHaveAttribute('href', '/toolkit/')
 })

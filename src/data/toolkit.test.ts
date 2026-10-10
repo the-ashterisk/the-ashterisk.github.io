@@ -1,15 +1,15 @@
-import { RESERVED_ROOT_PATHS, formatDate, freeResources, resourceContent, sortedResources } from './free'
+import { RESERVED_ROOT_PATHS, formatDate, toolkitResources, resourceContent, sortedResources } from './toolkit'
 
 const urlSafe = /^[a-z0-9-]+$/
 
 test('slugs are unique and url-safe', () => {
-  const slugs = freeResources.map((r) => r.slug)
+  const slugs = toolkitResources.map((r) => r.slug)
   expect(new Set(slugs).size).toBe(slugs.length)
   for (const slug of slugs) expect(slug).toMatch(urlSafe)
 })
 
 test('short links are lowercase single words that never collide', () => {
-  const shorts = freeResources.map((r) => r.shortLink)
+  const shorts = toolkitResources.map((r) => r.shortLink)
   expect(new Set(shorts).size).toBe(shorts.length)
   for (const short of shorts) {
     expect(short).toMatch(/^[a-z]+$/)
@@ -19,7 +19,7 @@ test('short links are lowercase single words that never collide', () => {
 })
 
 test('every resource has its markdown, three how-to steps and a real file name', () => {
-  for (const r of freeResources) {
+  for (const r of toolkitResources) {
     expect(resourceContent(r.slug).trim().length).toBeGreaterThan(0)
     expect(r.howTo).toHaveLength(3)
     for (const step of r.howTo) expect(step.trim()).not.toBe('')
@@ -29,7 +29,7 @@ test('every resource has its markdown, three how-to steps and a real file name',
 })
 
 test('dates are ISO and the hub lists newest reel first', () => {
-  for (const r of freeResources) {
+  for (const r of toolkitResources) {
     expect(r.reel.postedOn).toMatch(/^\d{4}-\d{2}-\d{2}$/)
     expect(r.lastUpdated).toMatch(/^\d{4}-\d{2}-\d{2}$/)
   }

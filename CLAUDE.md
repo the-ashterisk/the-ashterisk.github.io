@@ -32,12 +32,12 @@ npm run build    # tsc -b && vite build → dist/
 - `src/data/` — all content. Add a project by appending to `projects.ts`; socials/email live in `links.ts`.
   Legal copy lives in `legal.ts` — bump `LEGAL_LAST_UPDATED` on any wording change.
 - `src/lib/` — `sectionHref(id)`: use it for any link to a home-page section so it works from other pages.
-- `/free` "The Toolkit" (freebies from reels) — **prerendered static HTML**, not React-mounted pages (link previews and
-  direct DM links need real files). `build/freePages.ts` (Vite plugin) emits `/free/`, each
-  `/free/<slug>/`, the raw `.md`, short-link redirects (`/claude`, `/audit`, `/prompts`) and
-  `404.html` from `src/free/pages.tsx`. Add a freebie: `src/content/free/<slug>.md` + one entry in
-  `src/data/free.ts`, then `npm run og` (headless Chrome) to regenerate `public/free/og/*.png`.
-  Browser JS for these pages is only `src/free/client.ts` (Copy, expand, theme toggle).
+- `/toolkit` "The Toolkit" (freebies from reels) — **prerendered static HTML**, not React-mounted pages (link previews and
+  direct DM links need real files). `build/toolkitPages.ts` (Vite plugin) emits `/toolkit/`, each
+  `/toolkit/<slug>/`, the raw `.md`, short-link redirects (`/claude`, `/audit`, `/prompts`) and
+  `404.html` from `src/toolkit/pages.tsx`. Add a freebie: `src/content/toolkit/<slug>.md` + one entry in
+  `src/data/toolkit.ts`, then `npm run og` (headless Chrome) to regenerate `public/toolkit/og/*.png`.
+  Browser JS for these pages is only `src/toolkit/client.ts` (Copy, expand, theme toggle).
 - `src/theme/` — `tokens.css` (CSS variables), `ThemeProvider` (`.dark` class on `<html>`, persisted in localStorage, defaults dark).
 
 ## Conventions

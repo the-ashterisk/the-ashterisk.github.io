@@ -1,5 +1,5 @@
 import { Moon, Sun } from 'lucide-react'
-import type { FreeType } from '../data/free'
+import type { ToolkitType } from '../data/toolkit'
 
 export const focusRing = 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent'
 
@@ -9,7 +9,7 @@ const buttonBase = `inline-flex min-h-[48px] items-center justify-center gap-2 r
 export const solidButton = `${buttonBase} bg-text text-bg hover:brightness-110`
 export const outlineButton = `${buttonBase} border border-line text-text hover:border-accent`
 
-export function TypeTag({ type }: { type: FreeType }) {
+export function TypeTag({ type }: { type: ToolkitType }) {
   return (
     <span className="inline-flex items-center gap-1.5 self-start rounded-full border border-line px-3 py-1 font-body text-xs font-medium text-text">
       <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent" />

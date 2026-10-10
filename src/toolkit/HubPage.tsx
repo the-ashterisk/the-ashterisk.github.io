@@ -1,9 +1,9 @@
 import { ArrowRight, ArrowUpRight } from 'lucide-react'
-import { INSTAGRAM_PROFILE, pagePath, type FreeResource } from '../data/free'
-import { FreeLayout } from './FreeLayout'
+import { INSTAGRAM_PROFILE, pagePath, type ToolkitResource } from '../data/toolkit'
+import { ToolkitLayout } from './ToolkitLayout'
 import { focusRing, NoBreakHyphens, TypeTag } from './ui'
 
-function HubCard({ resource: r }: { resource: FreeResource }) {
+function HubCard({ resource: r }: { resource: ToolkitResource }) {
   return (
     <li className="group relative flex flex-col rounded-2xl border border-line bg-surface p-5 transition-[transform,border-color,box-shadow] duration-300 ease-out hover:border-accent/40 hover:shadow-[0_16px_40px_-16px_rgba(255,82,68,0.35)] motion-safe:hover:-translate-y-1 sm:p-6">
       <TypeTag type={r.type} />
@@ -31,9 +31,9 @@ function HubCard({ resource: r }: { resource: FreeResource }) {
   )
 }
 
-export function HubPage({ resources }: { resources: FreeResource[] }) {
+export function HubPage({ resources }: { resources: ToolkitResource[] }) {
   return (
-    <FreeLayout>
+    <ToolkitLayout>
       <div className="mx-auto max-w-3xl px-4 pb-16 pt-10 sm:px-5 sm:pt-16">
         <h1 className="font-display text-5xl font-bold leading-tight sm:text-6xl">
           The Toolkit
@@ -47,6 +47,6 @@ export function HubPage({ resources }: { resources: FreeResource[] }) {
           ))}
         </ul>
       </div>
-    </FreeLayout>
+    </ToolkitLayout>
   )
 }

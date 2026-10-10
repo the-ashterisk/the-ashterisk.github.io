@@ -4,11 +4,11 @@ import { runnerImport, type Plugin } from 'vite'
 // Prerenders the /free hub, each freebie page, the raw .md files, the short-link
 // redirects and 404.html as real static files. GitHub Pages has no rewrites, and
 // link previews (Instagram DMs, WhatsApp, X) read raw HTML without running JS.
-// The pages themselves are built by src/free/pages.tsx; this plugin only wires
+// The pages themselves are built by src/toolkit/pages.tsx; this plugin only wires
 // them into `vite build` (emitted assets) and `vite dev` (middleware).
 
-export const FREE_CLIENT_ENTRY = 'src/free/client.ts'
-const PAGES_MODULE = 'src/free/pages.tsx'
+export const TOOLKIT_CLIENT_ENTRY = 'src/toolkit/client.ts'
+const PAGES_MODULE = 'src/toolkit/pages.tsx'
 
 interface StaticFile {
   fileName: string
@@ -26,11 +26,11 @@ function requestToFile(url: string): string {
   return `${clean}/index.html`
 }
 
-export function freePages(): Plugin {
+export function toolkitPages(): Plugin {
   let root = process.cwd()
 
   return {
-    name: 'ashterisk-free-pages',
+    name: 'ashterisk-toolkit-pages',
     configResolved(config) {
       root = config.root
     },
@@ -44,7 +44,7 @@ export function freePages(): Plugin {
         }
         try {
           const { buildPages } = (await server.ssrLoadModule(`/${PAGES_MODULE}`)) as PagesModule
-          const file = buildPages(`<script type="module" src="/${FREE_CLIENT_ENTRY}"></script>`).find(
+          const file = buildPages(`<script type="module" src="/${TOOLKIT_CLIENT_ENTRY}"></script>`).find(
             (f) => f.fileName === fileName,
           )
           if (!file) return next()
@@ -63,13 +63,13 @@ export function freePages(): Plugin {
 
     async generateBundle(_options, bundle) {
       const entry = Object.values(bundle).find(
-        (out) => out.type === 'chunk' && out.isEntry && out.facadeModuleId?.endsWith(FREE_CLIENT_ENTRY),
+        (out) => out.type === 'chunk' && out.isEntry && out.facadeModuleId?.endsWith(TOOLKIT_CLIENT_ENTRY),
       )
       if (!entry || entry.type !== 'chunk') {
-        this.error(`free pages: ${FREE_CLIENT_ENTRY} must be a build.rollupOptions.input entry`)
+        this.error(`toolkit pages: ${TOOLKIT_CLIENT_ENTRY} must be a build.rollupOptions.input entry`)
       }
       const css = [...(entry.viteMetadata?.importedCss ?? [])]
-      if (css.length === 0) this.error('free pages: no CSS emitted for the client entry')
+      if (css.length === 0) this.error('toolkit pages: no CSS emitted for the client entry')
       const assetTags = [
         ...css.map((f) => `<link rel="stylesheet" crossorigin href="/${f}" />`),
         `<script type="module" crossorigin src="/${entry.fileName}"></script>`,

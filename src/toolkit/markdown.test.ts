@@ -11,5 +11,5 @@ test('external links open in a new tab; internal ones stay put', () => {
   expect(renderMarkdown('[x](https://example.org)')).toContain(
     '<a href="https://example.org" target="_blank" rel="noreferrer">x</a>',
   )
-  expect(renderMarkdown('[y](/free/)')).toContain('<a href="/free/">y</a>')
+  expect(renderMarkdown('[y](/toolkit/)')).toContain('<a href="/toolkit/">y</a>')
 })

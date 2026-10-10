@@ -1,7 +1,7 @@
-import { SITE_URL, filePath, freeResources, pagePath, resourceContent, sortedResources } from '../data/free'
+import { SITE_URL, filePath, toolkitResources, pagePath, resourceContent, sortedResources } from '../data/toolkit'
 import { buildPages, type StaticFile } from './pages'
 
-const ASSETS = '<link rel="stylesheet" href="/assets/free.css" />'
+const ASSETS = '<link rel="stylesheet" href="/assets/toolkit.css" />'
 const files = buildPages(ASSETS)
 const byName = new Map(files.map((f) => [f.fileName, f]))
 
@@ -23,15 +23,15 @@ function resolves(href: string): boolean {
 }
 
 test('emits the hub, every page, raw file, short link and 404', () => {
-  const expected = ['free/index.html', '404.html']
-  for (const r of freeResources) {
-    expected.push(`free/${r.slug}/index.html`, filePath(r).slice(1), `${r.shortLink}/index.html`)
+  const expected = ['toolkit/index.html', '404.html']
+  for (const r of toolkitResources) {
+    expected.push(`toolkit/${r.slug}/index.html`, filePath(r).slice(1), `${r.shortLink}/index.html`)
   }
   expect(files.map((f) => f.fileName).sort()).toEqual(expected.sort())
 })
 
 test('the raw file is byte-identical to the source markdown', () => {
-  for (const r of freeResources) {
+  for (const r of toolkitResources) {
     expect(byName.get(filePath(r).slice(1))?.source).toBe(resourceContent(r.slug))
   }
 })
@@ -44,9 +44,9 @@ test('every html page has its own title, description, preview tags and the clien
     expect(meta(doc, 'description')).toBeTruthy()
     expect(meta(doc, 'og:title')).toBeTruthy()
     expect(meta(doc, 'og:description')).toBeTruthy()
-    expect(meta(doc, 'og:image')).toMatch(new RegExp(`^${SITE_URL}/free/og/[a-z-]+\\.png$`))
+    expect(meta(doc, 'og:image')).toMatch(new RegExp(`^${SITE_URL}/toolkit/og/[a-z-]+\\.png$`))
     expect(doc.documentElement.classList.contains('no-js')).toBe(true)
-    if (!f.fileName.match(/^[a-z]+\/index\.html$/) || f.fileName === 'free/index.html') {
+    if (!f.fileName.match(/^[a-z]+\/index\.html$/) || f.fileName === 'toolkit/index.html') {
       // Short links reuse their target's title on purpose; everything else is unique.
       expect(titles.has(doc.title)).toBe(false)
       titles.add(doc.title)
@@ -56,8 +56,8 @@ test('every html page has its own title, description, preview tags and the clien
 })
 
 test('resource page follows the agreed order and links its file', () => {
-  for (const r of freeResources) {
-    const doc = page(`free/${r.slug}/index.html`)
+  for (const r of toolkitResources) {
+    const doc = page(`toolkit/${r.slug}/index.html`)
     expect(doc.querySelector('link[rel=canonical]')?.getAttribute('href')).toBe(`${SITE_URL}${pagePath(r)}`)
     const main = doc.querySelector('main')!
     const order = [
@@ -85,13 +85,13 @@ test('resource page follows the agreed order and links its file', () => {
     expect(doc.querySelector<HTMLTextAreaElement>('[data-copy-source]')?.value).toBe(resourceContent(r.slug))
     // Footer lists the other freebies but not this one.
     const more = doc.querySelector('nav[aria-label="More from the toolkit"]')!
-    expect(more.querySelectorAll('a')).toHaveLength(freeResources.length - 1)
+    expect(more.querySelectorAll('a')).toHaveLength(toolkitResources.length - 1)
     expect(more.querySelector(`a[href="${pagePath(r)}"]`)).toBeNull()
   }
 })
 
 test('content is readable without JS: rendered markdown is in the HTML, JS-only controls are marked', () => {
-  const doc = page('free/audit/index.html')
+  const doc = page('toolkit/audit/index.html')
   expect(doc.querySelector('#file-body h2, #file-body h1')).not.toBeNull()
   expect(doc.querySelector('[data-copy]')?.classList.contains('js-only')).toBe(true)
   expect(doc.querySelector('[data-expand]')?.classList.contains('js-only')).toBe(true)
@@ -99,17 +99,17 @@ test('content is readable without JS: rendered markdown is in the HTML, JS-only 
 })
 
 test('hub lists every freebie newest first, each with its reel', () => {
-  const doc = page('free/index.html')
+  const doc = page('toolkit/index.html')
   const titles = [...doc.querySelectorAll('main h2')].map((h) => h.textContent)
   expect(titles).toEqual(sortedResources().map((r) => r.title))
-  for (const r of freeResources) {
+  for (const r of toolkitResources) {
     expect(doc.querySelector(`main a[href="${pagePath(r)}"]`)).not.toBeNull()
   }
-  expect(doc.querySelectorAll('main a[target=_blank]')).toHaveLength(freeResources.length)
+  expect(doc.querySelectorAll('main a[target=_blank]')).toHaveLength(toolkitResources.length)
 })
 
 test('short links redirect to their page without JS and stay out of search', () => {
-  for (const r of freeResources) {
+  for (const r of toolkitResources) {
     const doc = page(`${r.shortLink}/index.html`)
     expect(doc.querySelector('meta[http-equiv=refresh]')?.getAttribute('content')).toBe(`0; url=${pagePath(r)}`)
     expect(doc.querySelector('link[rel=canonical]')?.getAttribute('href')).toBe(`${SITE_URL}${pagePath(r)}`)

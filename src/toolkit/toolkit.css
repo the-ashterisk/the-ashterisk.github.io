@@ -1,6 +1,6 @@
 @import '../index.css';
 
-/* Styles only the static /free pages need. Colors come from tokens.css. */
+/* Styles only the static /toolkit pages need. Colors come from tokens.css. */
 
 /* Controls that need JS stay hidden until the head script removes .no-js. */
 html.no-js .js-only {

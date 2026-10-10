@@ -60,5 +60,5 @@ test('links to the toolkit', () => {
       <Nav />
     </ThemeProvider>,
   )
-  expect(screen.getByRole('link', { name: 'Toolkit' })).toHaveAttribute('href', '/free/')
+  expect(screen.getByRole('link', { name: 'Toolkit' })).toHaveAttribute('href', '/toolkit/')
 })

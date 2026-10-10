@@ -1,10 +1,10 @@
-import { pagePath, type FreeResource } from '../data/free'
-import { FreeLayout } from './FreeLayout'
+import { pagePath, type ToolkitResource } from '../data/toolkit'
+import { ToolkitLayout } from './ToolkitLayout'
 import { focusRing, outlineButton, solidButton } from './ui'
 
-export function NotFoundPage({ resources }: { resources: FreeResource[] }) {
+export function NotFoundPage({ resources }: { resources: ToolkitResource[] }) {
   return (
-    <FreeLayout>
+    <ToolkitLayout>
       <div className="mx-auto max-w-3xl px-4 pb-16 pt-12 sm:px-5 sm:pt-20">
         <p className="font-display text-sm font-bold uppercase tracking-widest text-text-secondary">404</p>
         <h1 className="mt-3 font-display text-4xl font-bold leading-tight sm:text-5xl">
@@ -27,7 +27,7 @@ export function NotFoundPage({ resources }: { resources: FreeResource[] }) {
           ))}
         </ul>
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <a href="/free/" className={solidButton}>
+          <a href="/toolkit/" className={solidButton}>
             Open the toolkit
           </a>
           <a href="/" className={outlineButton}>
@@ -35,6 +35,6 @@ export function NotFoundPage({ resources }: { resources: FreeResource[] }) {
           </a>
         </div>
       </div>
-    </FreeLayout>
+    </ToolkitLayout>
   )
 }

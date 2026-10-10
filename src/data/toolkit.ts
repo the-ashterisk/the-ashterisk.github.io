@@ -2,16 +2,16 @@ export const SITE_URL = 'https://the-ashterisk.github.io'
 export const INSTAGRAM_PROFILE = 'https://www.instagram.com/the.ashterisk'
 export const YOUTUBE_PROFILE = 'https://www.youtube.com/@the.ashterisk'
 
-export type FreeType = 'Template' | 'Checklist' | 'Prompts'
+export type ToolkitType = 'Template' | 'Checklist' | 'Prompts'
 
-export interface FreeResource {
-  /** Page lives at /free/<slug>/ and its markdown at src/content/free/<slug>.md. */
+export interface ToolkitResource {
+  /** Page lives at /toolkit/<slug>/ and its markdown at src/content/toolkit/<slug>.md. */
   slug: string
   /** Typeable redirect at /<shortLink>/, used in YouTube Shorts. */
   shortLink: string
   title: string
   description: string
-  type: FreeType
+  type: ToolkitType
   /** Name the file is copied/downloaded as. */
   fileName: string
   howTo: [string, string, string]
@@ -27,17 +27,17 @@ export interface FreeResource {
   lastUpdated: string
 }
 
-const content = import.meta.glob<string>('../content/free/*.md', { query: '?raw', import: 'default', eager: true })
+const content = import.meta.glob<string>('../content/toolkit/*.md', { query: '?raw', import: 'default', eager: true })
 
 /** Raw markdown for a resource — the one source for the page, Copy and Download. */
 export function resourceContent(slug: string): string {
-  const raw = content[`../content/free/${slug}.md`]
-  if (raw === undefined) throw new Error(`Missing src/content/free/${slug}.md`)
+  const raw = content[`../content/toolkit/${slug}.md`]
+  if (raw === undefined) throw new Error(`Missing src/content/toolkit/${slug}.md`)
   return raw
 }
 
-// Add a freebie: drop its markdown in src/content/free/<slug>.md and append one entry here.
-export const freeResources: FreeResource[] = [
+// Add a freebie: drop its markdown in src/content/toolkit/<slug>.md and append one entry here.
+export const toolkitResources: ToolkitResource[] = [
   {
     slug: 'claude-md',
     shortLink: 'claude',
@@ -86,16 +86,16 @@ export const freeResources: FreeResource[] = [
 ]
 
 /** Hub order: newest reel first. */
-export function sortedResources(): FreeResource[] {
-  return [...freeResources].sort((a, b) => b.reel.postedOn.localeCompare(a.reel.postedOn))
+export function sortedResources(): ToolkitResource[] {
+  return [...toolkitResources].sort((a, b) => b.reel.postedOn.localeCompare(a.reel.postedOn))
 }
 
-export const pagePath = (r: FreeResource) => `/free/${r.slug}/`
-export const filePath = (r: FreeResource) => `/free/${r.slug}/${r.fileName}`
-export const ogImagePath = (slug: string) => `/free/og/${slug}.png`
+export const pagePath = (r: ToolkitResource) => `/toolkit/${r.slug}/`
+export const filePath = (r: ToolkitResource) => `/toolkit/${r.slug}/${r.fileName}`
+export const ogImagePath = (slug: string) => `/toolkit/og/${slug}.png`
 
 /** Top-level paths that already exist; a short link must never take one of these. */
-export const RESERVED_ROOT_PATHS = ['free', 'privacy', 'terms', 'assets', 'src', '404', 'index']
+export const RESERVED_ROOT_PATHS = ['toolkit', 'privacy', 'terms', 'assets', 'src', '404', 'index']
 
 /** "2026-10-19" → "19 Oct 2026", without timezone drift. */
 export function formatDate(iso: string): string {

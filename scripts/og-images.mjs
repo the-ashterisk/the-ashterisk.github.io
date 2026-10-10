@@ -1,4 +1,4 @@
-// Generates the 1200×630 link-preview images for /free into public/free/og/.
+// Generates the 1200×630 link-preview images for /toolkit into public/toolkit/og/.
 // Run by hand after adding or renaming a toolkit entry: `npm run og`. The PNGs are
 // committed, so the normal build never needs Chrome.
 //
@@ -12,10 +12,10 @@ import { fileURLToPath, pathToFileURL } from 'node:url'
 import { runnerImport } from 'vite'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
-const outDir = path.join(root, 'public/free/og')
+const outDir = path.join(root, 'public/toolkit/og')
 const chrome = process.env.CHROME_PATH ?? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 
-const { module: data } = await runnerImport(path.join(root, 'src/data/free.ts'), { configFile: false, root, logLevel: 'warn' })
+const { module: data } = await runnerImport(path.join(root, 'src/data/toolkit.ts'), { configFile: false, root, logLevel: 'warn' })
 
 const font = (pkg, file) => pathToFileURL(path.join(root, 'node_modules/@fontsource', pkg, 'files', file)).href
 const mascot = pathToFileURL(path.join(root, 'src/assets/ash.png')).href
@@ -47,12 +47,12 @@ p { font-size: 32px; line-height: 1.35; color: #555; margin-top: 24px; max-width
 <div class="eyebrow"><span class="dot"></span>${esc(eyebrow)}</div>
 <h1>${esc(title).replace(/-/g, "\u2011")}</h1>
 <p>${esc(subtitle)}</p>
-<div class="brand"><img src="${mascot}" alt=""><span>ashterisk</span><span class="url">the-ashterisk.github.io/free</span></div>
+<div class="brand"><img src="${mascot}" alt=""><span>ashterisk</span><span class="url">the-ashterisk.github.io/toolkit</span></div>
 </body></html>`
 }
 
 const cards = [
-  ...data.freeResources.map((r) => ({
+  ...data.toolkitResources.map((r) => ({
     slug: r.slug,
     eyebrow: `The Toolkit · ${r.type}`,
     title: r.title,

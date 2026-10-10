@@ -7,8 +7,8 @@ import {
   pagePath,
   resourceContent,
   sortedResources,
-  type FreeResource,
-} from '../data/free'
+  type ToolkitResource,
+} from '../data/toolkit'
 import { renderMarkdown } from './markdown'
 import { ResourcePage } from './ResourcePage'
 import { HubPage } from './HubPage'
@@ -80,7 +80,7 @@ function documentHtml(meta: Meta, assetTags: string, body: string, extraHead = '
 
 const render = (el: ReactElement) => renderToStaticMarkup(el)
 
-export const resourceMeta = (r: FreeResource): Meta => ({
+export const resourceMeta = (r: ToolkitResource): Meta => ({
   title: `${r.title} — The Ashterisk Toolkit`,
   description: r.description,
   path: pagePath(r),
@@ -91,13 +91,13 @@ export const resourceMeta = (r: FreeResource): Meta => ({
 export const hubMeta: Meta = {
   title: 'The Toolkit — ashterisk',
   description: 'Templates, checklists and prompts for building with AI, from the Ashterisk reels.',
-  path: '/free/',
+  path: '/toolkit/',
   ogImage: ogImagePath('hub'),
 }
 
 // Short links keep the target's preview tags so a pasted /audit still previews
 // properly, then hand off instantly. meta refresh covers no-JS webviews.
-function redirectHtml(r: FreeResource): string {
+function redirectHtml(r: ToolkitResource): string {
   const target = pagePath(r)
   const body = `<p style="font-family:system-ui,sans-serif;padding:2rem 1rem">Taking you to <a href="${target}">${escapeHtml(r.title)}</a>…</p>
     <script>location.replace(${JSON.stringify(target)} + location.hash)</script>`
@@ -110,8 +110,8 @@ function redirectHtml(r: FreeResource): string {
 }
 
 /**
- * Every static file under /free, the short links and 404.html.
- * `assetTags` is the <link>/<script> markup for the free-pages client bundle;
+ * Every static file under /toolkit, the short links and 404.html.
+ * `assetTags` is the <link>/<script> markup for the toolkit client bundle;
  * the Vite plugin passes hashed build files or dev-server module paths.
  */
 export function buildPages(assetTags: string): StaticFile[] {
@@ -119,7 +119,7 @@ export function buildPages(assetTags: string): StaticFile[] {
   const files: StaticFile[] = []
 
   files.push({
-    fileName: 'free/index.html',
+    fileName: 'toolkit/index.html',
     source: documentHtml(hubMeta, assetTags, render(<HubPage resources={resources} />)),
   })
 
@@ -127,7 +127,7 @@ export function buildPages(assetTags: string): StaticFile[] {
     const raw = resourceContent(r.slug)
     const others = resources.filter((o) => o.slug !== r.slug)
     files.push({
-      fileName: `free/${r.slug}/index.html`,
+      fileName: `toolkit/${r.slug}/index.html`,
       source: documentHtml(
         resourceMeta(r),
         assetTags,

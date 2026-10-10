@@ -1,7 +1,7 @@
-// free.css @imports the site's index.css so these pages get one self-contained stylesheet.
-import './free.css'
+// toolkit.css @imports the site's index.css so these pages get one self-contained stylesheet.
+import './toolkit.css'
 
-// The only JS on the /free pages. Everything is readable without it;
+// The only JS on the /toolkit pages. Everything is readable without it;
 // this adds Copy, the panel chevron and the theme toggle.
 
 const THEME_KEY = 'ashterisk-theme'

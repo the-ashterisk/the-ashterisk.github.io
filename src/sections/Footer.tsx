@@ -63,7 +63,7 @@ export function Footer() {
                   </li>
                 ))}
                 <li>
-                  <a href="/free/" className={linkCls}>
+                  <a href="/toolkit/" className={linkCls}>
                     Toolkit
                   </a>
                 </li>
