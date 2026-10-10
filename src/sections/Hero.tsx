@@ -54,7 +54,7 @@ export function Hero() {
     <section className="relative overflow-hidden">
       <DotGrid className="opacity-60" />
       <Spotlight />
-      <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 py-16 md:grid-cols-2 md:py-24">
+      <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 pb-16 pt-10 md:grid-cols-2 md:py-24">
         <motion.div {...motionProps}>
           <motion.span
             {...childProps}
