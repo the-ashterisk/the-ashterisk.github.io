@@ -42,7 +42,7 @@ export const privacyPolicy: LegalDoc = {
       heading: 'Data stored on your device',
       paragraphs: [
         'The Site saves two small values in your own browser so it behaves the way you expect. They never leave your device and are not sent to us or anyone else.',
-        'Your theme choice (light or dark) is saved in localStorage under the key "ashterisk-theme" so it is remembered between visits.',
+        'Your theme (light or dark) is saved in localStorage under the key "ashterisk-theme" so it stays the same between visits.',
         'A flag named "ashterisk-preloader-shown" is saved in sessionStorage so the intro animation plays only once per visit. Your browser deletes it when you close the tab.',
         "You can remove both at any time by clearing this Site's data in your browser settings.",
       ],
@@ -80,7 +80,7 @@ export const privacyPolicy: LegalDoc = {
       id: 'children',
       heading: "Children's privacy",
       paragraphs: [
-        'The Site is not directed at children under 13 and does not knowingly collect information from anyone, including children.',
+        'The Site is not directed at children under 13, and we do not knowingly collect personal information from children.',
       ],
     },
     {

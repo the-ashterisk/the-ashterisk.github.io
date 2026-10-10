@@ -4,8 +4,14 @@ import { useEffect } from 'react'
 // scroll can run before React has rendered the target, so retry once mounted.
 export function useScrollToHashOnLoad(): void {
   useEffect(() => {
-    const id = decodeURIComponent(window.location.hash.slice(1))
-    if (!id) return
+    const raw = window.location.hash.slice(1)
+    if (!raw) return
+    let id = raw
+    try {
+      id = decodeURIComponent(raw)
+    } catch {
+      // Malformed escape (e.g. a mangled share link) — fall back to the raw hash.
+    }
     document.getElementById(id)?.scrollIntoView()
   }, [])
 }

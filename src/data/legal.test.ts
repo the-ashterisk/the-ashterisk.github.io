@@ -37,3 +37,16 @@ test('terms name India as governing law', () => {
   const text = termsOfUse.sections.flatMap((s) => s.paragraphs).join(' ')
   expect(text).toMatch(/laws of India/)
 })
+
+const privacySection = (id: string) =>
+  privacyPolicy.sections.find((s) => s.id === id)!.paragraphs.join(' ')
+
+test('privacy policy does not claim the theme is only stored on an explicit choice', () => {
+  // ThemeProvider persists the active theme on every load, chosen or not.
+  expect(privacySection('data-on-your-device')).not.toMatch(/theme choice/i)
+})
+
+test("children's section does not contradict the email section", () => {
+  expect(privacySection('children')).not.toMatch(/from anyone/i)
+  expect(privacySection('children')).toMatch(/from children/i)
+})
