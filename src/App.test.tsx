@@ -12,4 +12,5 @@ test('composes the full landing page', () => {
   expect(screen.getByRole('heading', { name: /things i've built/i })).toBeInTheDocument()
   expect(screen.getByRole('heading', { name: /the channel/i })).toBeInTheDocument()
   expect(screen.getByRole('heading', { name: /follow the journey/i })).toBeInTheDocument()
+  expect(screen.getByRole('link', { name: 'Privacy Policy' })).toHaveAttribute('href', '/privacy/')
 })

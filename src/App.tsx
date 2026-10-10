@@ -2,7 +2,7 @@ import { Nav } from './components/Nav'
 import { Hero } from './sections/Hero'
 import { Projects } from './sections/Projects'
 import { About } from './sections/About'
-import { Connect } from './sections/Connect'
+import { Footer } from './sections/Footer'
 import { Preloader } from './motion/Preloader'
 import { useScrollToHashOnLoad } from './lib/useScrollToHashOnLoad'
 
@@ -18,7 +18,7 @@ export default function App() {
         <Projects />
         <About />
       </main>
-      <Connect />
+      <Footer />
     </div>
   )
 }
