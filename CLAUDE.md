@@ -32,12 +32,23 @@ npm run build    # tsc -b && vite build → dist/
 - `src/data/` — all content. Add a project by appending to `projects.ts`; socials/email live in `links.ts`.
   Legal copy lives in `legal.ts` — bump `LEGAL_LAST_UPDATED` on any wording change.
 - `src/lib/` — `sectionHref(id)`: use it for any link to a home-page section so it works from other pages.
-- `/toolkit` "The Toolkit" (freebies from reels) — **prerendered static HTML**, not React-mounted pages (link previews and
-  direct DM links need real files). `build/toolkitPages.ts` (Vite plugin) emits `/toolkit/`, each
-  `/toolkit/<slug>/`, the raw `.md`, short-link redirects (`/claude`, `/audit`, `/prompts`) and
-  `404.html` from `src/toolkit/pages.tsx`. Add a freebie: `src/content/toolkit/<slug>.md` + one entry in
-  `src/data/toolkit.ts`, then `npm run og` (headless Chrome) to regenerate `public/toolkit/og/*.png`.
-  Browser JS for these pages is only `src/toolkit/client.ts` (Copy, expand, theme toggle).
+- `/toolkit` "The Toolkit" (freebies promised in reels) — **prerendered static HTML**, not React-mounted
+  pages (link previews and direct DM links need real files). `build/toolkitPages.ts` (Vite plugin) emits
+  `/toolkit/`, each `/toolkit/<slug>/`, the raw `.md`, short-link redirects (`/claude`, `/audit`,
+  `/prompts`) and `404.html` from `src/toolkit/pages.tsx`; in dev it serves the same via middleware.
+  - **Content:** `src/content/toolkit/<slug>.md` is the single source — the rendered panel, Copy and
+    Download (`/toolkit/<slug>/<fileName>`) all read it. Edit content only there.
+  - **Metadata:** `src/data/toolkit.ts` → `toolkitResources`, one entry per item: `slug`, `shortLink`,
+    `title`, `description`, `type`, `fileName`, `howTo` (exactly 3), `reel` (`number`, `postedOn`,
+    optional `instagram`/`youtube` URLs — profiles are linked until set), `lastUpdated` (bump by hand
+    when the `.md` changes). Hub order is newest `reel.postedOn` first.
+  - **Page `<title>`/meta/og tags:** built from that entry by `resourceMeta` in `src/toolkit/pages.tsx`
+    (hub: `hubMeta`). **og images:** `public/toolkit/og/<slug>.png`, drawn from title/type/description —
+    rerun `npm run og` (headless Chrome) after changing those.
+  - **Add an item:** the `.md` + one entry + `npm run og`. Tests guard short-link collisions
+    (`RESERVED_ROOT_PATHS`), missing files and broken internal links.
+  - Browser JS for these pages is only `src/toolkit/client.ts` (Copy, expand, theme toggle, Instagram
+    download hint).
 - `src/theme/` — `tokens.css` (CSS variables), `ThemeProvider` (`.dark` class on `<html>`, persisted in localStorage, defaults dark).
 
 ## Conventions
