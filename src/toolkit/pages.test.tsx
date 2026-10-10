@@ -91,7 +91,7 @@ test('resource page follows the agreed order and links its file', () => {
 })
 
 test('content is readable without JS: rendered markdown is in the HTML, JS-only controls are marked', () => {
-  const doc = page('toolkit/audit/index.html')
+  const doc = page(`toolkit/${toolkitResources[0].slug}/index.html`)
   expect(doc.querySelector('#file-body h2, #file-body h1')).not.toBeNull()
   expect(doc.querySelector('[data-copy]')?.classList.contains('js-only')).toBe(true)
   expect(doc.querySelector('[data-expand]')?.classList.contains('js-only')).toBe(true)

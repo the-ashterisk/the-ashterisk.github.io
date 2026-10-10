@@ -1,4 +1,6 @@
 @import '../index.css';
+/* Real bold for **strong** in rendered markdown; the main site only loads 400/500. */
+@import '@fontsource/dm-sans/700.css';
 
 /* Styles only the static /toolkit pages need. Colors come from tokens.css. */
 

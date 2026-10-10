@@ -13,3 +13,7 @@ test('external links open in a new tab; internal ones stay put', () => {
   )
   expect(renderMarkdown('[y](/toolkit/)')).toContain('<a href="/toolkit/">y</a>')
 })
+
+test('single line breaks are kept, as the files are written line by line', () => {
+  expect(renderMarkdown('**Ask what is wrong.**\n"List the problems first."')).toContain('<br>')
+})
