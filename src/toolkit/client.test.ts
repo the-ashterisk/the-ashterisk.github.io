@@ -2,14 +2,20 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { createElement } from 'react'
 import { FilePanel } from './FilePanel'
 import { StaticThemeToggle } from './ui'
-import { init, initInAppHint } from './client'
+import { carryCampaign, init, initInAppHint } from './client'
+import { track } from '../lib/analytics'
+
+vi.mock('../lib/analytics', () => ({ track: vi.fn(), initAnalytics: vi.fn() }))
 
 const RAW = '# Hello\n\n- [ ] raw markdown'
 
 function mount() {
   document.body.innerHTML =
     renderToStaticMarkup(createElement(StaticThemeToggle)) +
-    renderToStaticMarkup(createElement(FilePanel, { fileName: 'CLAUDE.md', raw: RAW, html: '<h1>Hello</h1>' }))
+    renderToStaticMarkup(
+      createElement(FilePanel, { fileName: 'CLAUDE.md', slug: 'claude-md', type: 'Template', raw: RAW, html: '<h1>Hello</h1>' }),
+    ) +
+    '<a data-download data-slug="claude-md" data-type="Template" href="/toolkit/claude-md/CLAUDE.md" download="CLAUDE.md">Download</a>'
   init(document)
   const q = <T extends Element>(sel: string) => document.querySelector<T>(sel)!
   return {
@@ -21,10 +27,13 @@ function mount() {
     expand: q<HTMLButtonElement>('[data-expand]'),
     toggle: q<HTMLDetailsElement>('details.file-toggle'),
     theme: q<HTMLButtonElement>('[data-theme-toggle]'),
+    download: q<HTMLAnchorElement>('[data-download]'),
   }
 }
 
 const flush = () => new Promise((r) => setTimeout(r, 0))
+
+beforeEach(() => vi.mocked(track).mockClear())
 
 afterEach(() => {
   vi.restoreAllMocks()
@@ -116,4 +125,55 @@ test('the download hint only shows inside Instagram and Facebook webviews', () =
   expect(hint.hidden).toBe(true)
   initInAppHint(hint, 'Mozilla/5.0 (iPhone) [FBAN/FBIOS;FBAV/450.0]')
   expect(hint.hidden).toBe(false)
+})
+
+test('Copy reports which item was copied and that it worked', async () => {
+  Object.defineProperty(navigator, 'clipboard', { value: { writeText: vi.fn().mockResolvedValue(undefined) }, configurable: true })
+  const ui = mount()
+  ui.copy.click()
+  await flush()
+  expect(track).toHaveBeenCalledWith('toolkit_copied', { slug: 'claude-md', type: 'Template', success: true })
+})
+
+test('Copy reports a blocked clipboard as success: false', async () => {
+  Object.defineProperty(navigator, 'clipboard', { value: { writeText: vi.fn().mockRejectedValue(new Error('denied')) }, configurable: true })
+  document.execCommand = vi.fn(() => false)
+  const ui = mount()
+  ui.copy.click()
+  await flush()
+  expect(track).toHaveBeenCalledWith('toolkit_copied', { slug: 'claude-md', type: 'Template', success: false })
+})
+
+test('Download reports the item with a beacon and still downloads', () => {
+  const ui = mount()
+  const event = new MouseEvent('click', { bubbles: true, cancelable: true })
+  ui.download.dispatchEvent(event)
+  expect(track).toHaveBeenCalledWith('toolkit_downloaded', { slug: 'claude-md', type: 'Template' }, { beacon: true })
+  expect(event.defaultPrevented).toBe(false)
+})
+
+describe('carryCampaign', () => {
+  const links = () =>
+    `<a id="hub" href="/toolkit/">Hub</a>
+     <a id="item" href="/toolkit/ship-checklist/#how-to">Item</a>
+     <a id="file" href="/toolkit/claude-md/CLAUDE.md">File</a>
+     <a id="home" href="/">Home</a>
+     <a id="ig" href="https://www.instagram.com/the.ashterisk">IG</a>`
+  const href = (id: string) => document.getElementById(id)!.getAttribute('href')
+
+  test('copies utm params onto toolkit page links only, keeping the hash', () => {
+    document.body.innerHTML = links()
+    carryCampaign(document, '?utm_source=instagram&utm_medium=bio&ref=x')
+    expect(href('hub')).toBe('/toolkit/?utm_source=instagram&utm_medium=bio')
+    expect(href('item')).toBe('/toolkit/ship-checklist/?utm_source=instagram&utm_medium=bio#how-to')
+    expect(href('file')).toBe('/toolkit/claude-md/CLAUDE.md')
+    expect(href('home')).toBe('/')
+    expect(href('ig')).toBe('https://www.instagram.com/the.ashterisk')
+  })
+
+  test('leaves links alone when the page has no campaign tag', () => {
+    document.body.innerHTML = links()
+    carryCampaign(document, '?ref=x')
+    expect(href('item')).toBe('/toolkit/ship-checklist/#how-to')
+  })
 })

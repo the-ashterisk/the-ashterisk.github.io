@@ -2,6 +2,7 @@ import { StrictMode, type ReactNode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { ThemeProvider } from '../theme/ThemeProvider'
 import { SmoothScroll } from '../motion/SmoothScroll'
+import { initAnalytics } from '../lib/analytics'
 import '../index.css'
 
 // Every HTML entry (home, /privacy/, /terms/) mounts through here so they
@@ -14,4 +15,5 @@ export function renderPage(node: ReactNode): void {
       </ThemeProvider>
     </StrictMode>,
   )
+  initAnalytics()
 }

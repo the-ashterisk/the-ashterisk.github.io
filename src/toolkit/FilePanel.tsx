@@ -3,6 +3,9 @@ import { focusRing } from './ui'
 
 interface FilePanelProps {
   fileName: string
+  /** Reported with Copy so analytics knows which item it was. */
+  slug: string
+  type: string
   /** Raw markdown: what Copy puts on the clipboard. */
   raw: string
   /** Build-time rendered markdown, shown in the panel body. */
@@ -12,9 +15,9 @@ interface FilePanelProps {
 // The body is always in the HTML (readable without JS) and clamped to a "peek".
 // The <details> at the bottom expands it with no JS via :has(); client.ts adds
 // Copy, the chevron toggle and an .is-open fallback for browsers without :has().
-export function FilePanel({ fileName, raw, html }: FilePanelProps) {
+export function FilePanel({ fileName, slug, type, raw, html }: FilePanelProps) {
   return (
-    <section data-file-panel aria-label={`${fileName} file`} className="file-panel overflow-hidden rounded-2xl border border-line bg-surface">
+    <section data-file-panel data-slug={slug} data-type={type} aria-label={`${fileName} file`} className="file-panel overflow-hidden rounded-2xl border border-line bg-surface">
       <div className="flex min-h-[56px] items-center gap-2 border-b border-line py-1.5 pl-4 pr-1.5">
         <FileText size={18} aria-hidden className="shrink-0 text-accent" />
         <h2 className="min-w-0 flex-1 truncate font-display text-sm font-medium">{fileName}</h2>
