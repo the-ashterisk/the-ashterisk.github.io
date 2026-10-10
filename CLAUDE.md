@@ -7,6 +7,8 @@ Tailwind 3 · Framer Motion · Lenis. Node 20 (`.nvmrc`). Live at https://the-as
 - **Never push to `main` from local.** `main` auto-deploys to production (GitHub Pages).
 - Every change goes on a feature branch (`feat/…`, `fix/…`, `docs/…`, `chore/…`), pushed to
   `origin`, then a PR into `main`. The merge is what deploys.
+- `main` is protected by the "Protect main" ruleset: PR required, squash-merge only, the `verify`
+  check (`.github/workflows/ci.yml`: test + lint + build) must pass, no force-push or deletion.
 - **Never merge a PR without the owner's explicit approval.** Open the PR, share the link, and wait
   for the owner to approve it (on the PR or in chat) before merging.
 - Before committing: `npm test && npm run lint && npm run build` must all pass.
