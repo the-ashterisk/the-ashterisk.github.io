@@ -32,11 +32,11 @@ export function ResourcePage({ resource: r, raw, html, others }: ResourcePagePro
         </header>
 
         <div className="mt-8">
-          <FilePanel fileName={r.fileName} raw={raw} html={html} />
+          <FilePanel fileName={r.fileName} slug={r.slug} type={r.type} raw={raw} html={html} />
         </div>
 
         <div className="mt-5">
-          <a href={filePath(r)} download={r.fileName} className={`${solidButton} w-full`}>
+          <a href={filePath(r)} download={r.fileName} data-download data-slug={r.slug} data-type={r.type} className={`${solidButton} w-full`}>
             <Download size={18} aria-hidden /> Download {r.fileName}
           </a>
           {/* Shown by client.ts only inside Instagram's in-app browser, which often blocks downloads. */}

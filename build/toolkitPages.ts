@@ -26,6 +26,18 @@ function requestToFile(url: string): string {
   return `${clean}/index.html`
 }
 
+/**
+ * <head> markup for the client entry. Its shared chunks (e.g. the analytics loader)
+ * get modulepreload tags so they download alongside the entry, not after it.
+ */
+export function entryAssetTags(entry: { fileName: string; imports: string[]; css: string[] }): string {
+  return [
+    ...entry.css.map((f) => `<link rel="stylesheet" crossorigin href="/${f}" />`),
+    `<script type="module" crossorigin src="/${entry.fileName}"></script>`,
+    ...entry.imports.map((f) => `<link rel="modulepreload" crossorigin href="/${f}" />`),
+  ].join('\n    ')
+}
+
 export function toolkitPages(): Plugin {
   let root = process.cwd()
 
@@ -70,10 +82,7 @@ export function toolkitPages(): Plugin {
       }
       const css = [...(entry.viteMetadata?.importedCss ?? [])]
       if (css.length === 0) this.error('toolkit pages: no CSS emitted for the client entry')
-      const assetTags = [
-        ...css.map((f) => `<link rel="stylesheet" crossorigin href="/${f}" />`),
-        `<script type="module" crossorigin src="/${entry.fileName}"></script>`,
-      ].join('\n    ')
+      const assetTags = entryAssetTags({ fileName: entry.fileName, imports: entry.imports, css })
 
       // Load the page builder through Vite so it gets TSX, import.meta.glob and ?raw.
       const { module } = await runnerImport<PagesModule>(path.join(root, PAGES_MODULE), {

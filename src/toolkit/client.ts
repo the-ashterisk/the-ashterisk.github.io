@@ -1,8 +1,10 @@
 // toolkit.css @imports the site's index.css so these pages get one self-contained stylesheet.
 import './toolkit.css'
+import { initAnalytics, track } from '../lib/analytics'
+import { isInAppBrowser } from '../lib/trafficSource'
 
 // The only JS on the /toolkit pages. Everything is readable without it;
-// this adds Copy, the panel chevron and the theme toggle.
+// this adds Copy, the panel chevron, the theme toggle and analytics.
 
 const THEME_KEY = 'ashterisk-theme'
 const COPIED_MS = 2000
@@ -48,11 +50,13 @@ export function initFilePanel(panel: HTMLElement): void {
   const fallback = panel.querySelector<HTMLElement>('[data-copy-fallback]')
   const expandBtn = panel.querySelector<HTMLButtonElement>('[data-expand]')
   const toggle = panel.querySelector<HTMLDetailsElement>('details.file-toggle')
+  const { slug = '', type = '' } = panel.dataset
 
   let resetTimer: number | undefined
   copyBtn?.addEventListener('click', async () => {
     if (!source || !label || !status || !fallback) return
     const ok = await writeClipboard(source.value, source)
+    track('toolkit_copied', { slug, type, success: ok })
     if (ok) {
       fallback.hidden = true
       label.textContent = 'Copied'
@@ -87,11 +91,9 @@ export function initFilePanel(panel: HTMLElement): void {
   sync()
 }
 
-const IN_APP_BROWSER = /Instagram|FBAN|FBAV/i
-
 /** Instagram's webview often blocks downloads; only there do we explain the way out. */
 export function initInAppHint(hint: HTMLElement, userAgent = navigator.userAgent): void {
-  hint.hidden = !IN_APP_BROWSER.test(userAgent)
+  hint.hidden = !isInAppBrowser(userAgent)
 }
 
 export function initThemeToggle(button: HTMLElement): void {
@@ -105,10 +107,37 @@ export function initThemeToggle(button: HTMLElement): void {
   })
 }
 
+export function initDownload(link: HTMLAnchorElement): void {
+  // Beacon, because the download can navigate away in Instagram's webview.
+  link.addEventListener('click', () => {
+    track('toolkit_downloaded', { slug: link.dataset.slug ?? '', type: link.dataset.type ?? '' }, { beacon: true })
+  })
+}
+
+/**
+ * Keeps the campaign tag (utm_*) on links between toolkit pages, so a bio → hub → item
+ * visit still counts as Instagram. Nothing is stored; file links stay untouched.
+ */
+export function carryCampaign(root: ParentNode, search = location.search): void {
+  const campaign = [...new URLSearchParams(search)].filter(([key]) => key.startsWith('utm_'))
+  if (campaign.length === 0) return
+  root.querySelectorAll<HTMLAnchorElement>('a[href^="/toolkit/"]').forEach((link) => {
+    const url = new URL(link.getAttribute('href')!, location.origin)
+    if (!url.pathname.endsWith('/')) return
+    for (const [key, value] of campaign) url.searchParams.set(key, value)
+    link.setAttribute('href', url.pathname + url.search + url.hash)
+  })
+}
+
 export function init(root: ParentNode = document): void {
   root.querySelectorAll<HTMLElement>('[data-file-panel]').forEach(initFilePanel)
   root.querySelectorAll<HTMLElement>('[data-theme-toggle]').forEach(initThemeToggle)
   root.querySelectorAll<HTMLElement>('[data-inapp-hint]').forEach((hint) => initInAppHint(hint))
+  root.querySelectorAll<HTMLAnchorElement>('[data-download]').forEach(initDownload)
+  carryCampaign(root)
 }
 
-if (!import.meta.env.VITEST) init()
+if (!import.meta.env.VITEST) {
+  init()
+  initAnalytics()
+}
