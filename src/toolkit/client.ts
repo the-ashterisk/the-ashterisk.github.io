@@ -1,5 +1,6 @@
 // toolkit.css @imports the site's index.css so these pages get one self-contained stylesheet.
 import './toolkit.css'
+import { isInAppBrowser } from '../lib/trafficSource'
 
 // The only JS on the /toolkit pages. Everything is readable without it;
 // this adds Copy, the panel chevron and the theme toggle.
@@ -87,11 +88,9 @@ export function initFilePanel(panel: HTMLElement): void {
   sync()
 }
 
-const IN_APP_BROWSER = /Instagram|FBAN|FBAV/i
-
 /** Instagram's webview often blocks downloads; only there do we explain the way out. */
 export function initInAppHint(hint: HTMLElement, userAgent = navigator.userAgent): void {
-  hint.hidden = !IN_APP_BROWSER.test(userAgent)
+  hint.hidden = !isInAppBrowser(userAgent)
 }
 
 export function initThemeToggle(button: HTMLElement): void {
