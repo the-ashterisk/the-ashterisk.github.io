@@ -43,8 +43,9 @@ export function Footer() {
         </Reveal>
 
         <Reveal delay={0.1}>
-          <div className="mt-16 grid gap-10 border-t border-line pt-12 md:grid-cols-3">
-            <div>
+          <div className="mt-16 grid grid-cols-2 gap-x-6 gap-y-10 border-t border-line pt-12 md:grid-cols-3">
+            {/* Brand spans the row on mobile so Explore and Follow sit side by side. */}
+            <div className="col-span-2 md:col-span-1">
               <a href={sectionHref('top')} className={`inline-flex items-center gap-2 rounded-full ${focusRing}`}>
                 <img src={ash} alt="" className="h-9 w-9 rounded-full object-cover" />
                 <span className="font-display text-lg font-bold tracking-widest">ashterisk</span>

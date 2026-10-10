@@ -1,4 +1,5 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { ThemeProvider } from '../theme/ThemeProvider'
 import { Nav } from './Nav'
 
@@ -61,4 +62,28 @@ test('links to the toolkit', () => {
     </ThemeProvider>,
   )
   expect(screen.getByRole('link', { name: 'Toolkit' })).toHaveAttribute('href', '/toolkit/')
+})
+
+test('mobile menu toggles the section links and closes on Escape or a link tap', async () => {
+  const user = userEvent.setup()
+  render(
+    <ThemeProvider>
+      <Nav />
+    </ThemeProvider>,
+  )
+  const toggle = screen.getByRole('button', { name: 'Open menu' })
+  expect(toggle).toHaveAttribute('aria-expanded', 'false')
+  expect(document.getElementById('mobile-menu')).toBeNull()
+
+  await user.click(toggle)
+  expect(screen.getByRole('button', { name: 'Close menu' })).toHaveAttribute('aria-expanded', 'true')
+  const menu = document.getElementById('mobile-menu')!
+  expect(within(menu).getByRole('link', { name: 'Toolkit' })).toHaveAttribute('href', '/toolkit/')
+
+  await user.keyboard('{Escape}')
+  expect(document.getElementById('mobile-menu')).toBeNull()
+
+  await user.click(screen.getByRole('button', { name: 'Open menu' }))
+  await user.click(within(document.getElementById('mobile-menu')!).getByRole('link', { name: 'About' }))
+  expect(document.getElementById('mobile-menu')).toBeNull()
 })
