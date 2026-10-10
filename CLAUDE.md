@@ -10,6 +10,7 @@ Tailwind 3 · Framer Motion · Lenis. Node 20 (`.nvmrc`). Live at https://the-as
 - **Never merge a PR without the owner's explicit approval.** Open the PR, share the link, and wait
   for the owner to approve it (on the PR or in chat) before merging.
 - Before committing: `npm test && npm run lint && npm run build` must all pass.
+- Specs and plans go in `docs/superpowers/` — it is git-ignored and stays local (the repo is public).
 
 ## Commands
 ```bash
