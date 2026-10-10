@@ -16,11 +16,16 @@ function ToolkitHeader() {
           <span className="font-display text-lg font-bold tracking-widest">ashterisk</span>
         </a>
         <div className="flex items-center gap-2">
+          {/* Most visitors arrive from an Instagram DM; following is the one ask. */}
           <a
-            href="/toolkit/"
-            className={`grid min-h-[44px] place-items-center rounded-full px-3 font-body text-sm text-text-secondary transition-colors hover:text-text ${focusRing}`}
+            href={INSTAGRAM_PROFILE}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Follow @the.ashterisk on Instagram"
+            className={`inline-flex min-h-[44px] items-center gap-2 rounded-full border border-line px-4 font-display text-sm font-medium text-text transition-colors hover:border-accent ${focusRing}`}
           >
-            Toolkit
+            <SiInstagram size={16} aria-hidden className="text-accent" />
+            Follow
           </a>
           <StaticThemeToggle />
         </div>

@@ -1,4 +1,4 @@
-import { SITE_URL, filePath, toolkitResources, pagePath, resourceContent, sortedResources } from '../data/toolkit'
+import { INSTAGRAM_PROFILE, SITE_URL, filePath, toolkitResources, pagePath, resourceContent, sortedResources } from '../data/toolkit'
 import { buildPages, type StaticFile } from './pages'
 
 const ASSETS = '<link rel="stylesheet" href="/assets/toolkit.css" />'
@@ -139,5 +139,12 @@ test('external links open in a new tab safely, and no link is empty', () => {
         expect(a.getAttribute('rel')).toContain('noreferrer')
       }
     }
+  }
+})
+
+test('the header asks visitors to follow on Instagram', () => {
+  for (const f of files.filter((f) => f.source.includes('<main'))) {
+    const follow = parse(f).querySelector('header a[aria-label="Follow @the.ashterisk on Instagram"]')
+    expect(follow?.getAttribute('href'), f.fileName).toBe(INSTAGRAM_PROFILE)
   }
 })
