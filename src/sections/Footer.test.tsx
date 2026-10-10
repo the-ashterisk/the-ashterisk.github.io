@@ -41,7 +41,7 @@ test('follow column has one link per social', () => {
 test('legal row has copyright, privacy and terms links', () => {
   render(<Footer />)
   const legal = screen.getByRole('navigation', { name: 'Legal' })
-  expect(within(legal).getByText(`© ${new Date().getFullYear()} Ashterisk`)).toBeInTheDocument()
+  expect(screen.getByText(`© ${new Date().getFullYear()} Ashterisk`)).toBeInTheDocument()
   expect(within(legal).getByRole('link', { name: 'Privacy Policy' })).toHaveAttribute('href', '/privacy/')
   expect(within(legal).getByRole('link', { name: 'Terms of Use' })).toHaveAttribute('href', '/terms/')
 })
@@ -49,4 +49,11 @@ test('legal row has copyright, privacy and terms links', () => {
 test('back to top is a plain page-local link', () => {
   render(<Footer />)
   expect(screen.getByRole('link', { name: /back to top/i })).toHaveAttribute('href', '#top')
+})
+
+test('copyright sits outside the legal navigation', () => {
+  render(<Footer />)
+  const legal = screen.getByRole('navigation', { name: 'Legal' })
+  const copyright = screen.getByText(`© ${new Date().getFullYear()} Ashterisk`)
+  expect(legal).not.toContainElement(copyright)
 })

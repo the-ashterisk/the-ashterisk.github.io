@@ -27,3 +27,11 @@ test('does not render on second mount in the same session', () => {
   render(<Preloader />)
   expect(screen.queryByTestId('preloader')).not.toBeInTheDocument()
 })
+
+test('is skipped when arriving at a specific section', () => {
+  window.history.pushState({}, '', '/#projects')
+  expect(shouldShowPreloader()).toBe(false)
+  render(<Preloader />)
+  expect(screen.queryByTestId('preloader')).not.toBeInTheDocument()
+  window.history.pushState({}, '', '/')
+})

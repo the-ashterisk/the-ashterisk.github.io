@@ -44,3 +44,12 @@ test('connect jumps to the footer on the current page, since every page has one'
   )
   expect(screen.getByRole('link', { name: 'Connect' })).toHaveAttribute('href', '#connect')
 })
+
+test('header navigation is named for screen readers', () => {
+  render(
+    <ThemeProvider>
+      <Nav />
+    </ThemeProvider>,
+  )
+  expect(screen.getByRole('navigation', { name: 'Main' })).toBeInTheDocument()
+})
