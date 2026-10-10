@@ -1,0 +1,45 @@
+# CLAUDE.md
+
+Single-page landing site for the Ashterisk YouTube channel. Vite 8 · React 19 · TypeScript ·
+Tailwind 3 · Framer Motion · Lenis. Node 20 (`.nvmrc`). Live at https://the-ashterisk.github.io.
+
+## Git workflow (mandatory)
+- **Never push to `main` from local.** `main` auto-deploys to production (GitHub Pages).
+- Every change goes on a feature branch (`feat/…`, `fix/…`, `docs/…`, `chore/…`), pushed to
+  `origin`, then a PR into `main`. Merge the PR once checks pass — the merge is what deploys.
+- Before committing: `npm test && npm run lint && npm run build` must all pass.
+
+## Commands
+```bash
+npm run dev      # dev server (also .claude/launch.json → "ashterisk-dev", port 5173)
+npm test         # vitest run (jsdom)
+npm run lint     # oxlint
+npm run build    # tsc -b && vite build → dist/
+```
+
+## Layout
+- `src/App.tsx` — page order: Preloader, Nav, Hero, Projects, About, Connect (footer).
+- `src/sections/` — page sections. `src/components/` — reusable UI primitives.
+- `src/motion/` — motion primitives (Reveal, Magnetic, ParallaxTilt, Spotlight, Preloader, SmoothScroll).
+- `src/data/` — all content. Add a project by appending to `projects.ts`; socials/email live in `links.ts`.
+- `src/theme/` — `tokens.css` (CSS variables), `ThemeProvider` (`.dark` class on `<html>`, persisted in localStorage, defaults dark).
+
+## Conventions
+- **Colors via tokens only.** Use Tailwind's `bg`, `surface`, `text`, `text-secondary`, `accent`,
+  `accent-light`, `line` (mapped to CSS vars in `tokens.css`); add new colors as vars for both themes.
+  Fonts: `font-display` (Space Grotesk), `font-body` (DM Sans).
+- **Motion must degrade.** Every animated component checks `usePrefersReducedMotion()` and renders a
+  static fallback; pointer-driven effects also require `usePointerFine()`. Call these hooks
+  unconditionally (never `a() && b()` — it changes hook order).
+- **Icons:** generic UI icons from `lucide-react`; brand marks (YouTube/GitHub/…) from `react-icons/si`
+  (lucide v1 removed them). Decorative icons get `aria-hidden`.
+- **A11y:** interactive elements get `focus-visible:ring-2 focus-visible:ring-accent`; external links
+  use `target="_blank" rel="noreferrer"`.
+- **Tests:** each component/hook has a co-located `*.test.tsx`. jsdom mocks for `matchMedia` and
+  `IntersectionObserver` are in `src/setupTests.ts`; use `mockMatchMedia([...])` from
+  `src/testUtils.ts` to force media queries (e.g. reduced motion, `(pointer: fine)`).
+
+## Deploy
+`.github/workflows/deploy.yml` builds and publishes `dist/` on every push to `main`. It uses
+`npm install`, **not** `npm ci`, on purpose: Rolldown's optional `@emnapi/*` deps drift across
+platforms and break strict lockfile sync. Don't "fix" this back to `npm ci`.
