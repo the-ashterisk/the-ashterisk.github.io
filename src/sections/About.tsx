@@ -14,7 +14,7 @@ export function About() {
         </Reveal>
         <Reveal delay={0.1}>
           <p className="mt-6 font-body text-lg leading-relaxed text-text-secondary">
-            I'm Akash — an Android engineer moving into AI systems engineering. Ashterisk is where I
+            I'm Akash — a mobile engineer moving into AI systems engineering. Ashterisk is where I
             document that transition in the open: real AI project builds, honest tool reviews, and the
             lessons in between. No polished-guru act — just the work, as it happens.
           </p>

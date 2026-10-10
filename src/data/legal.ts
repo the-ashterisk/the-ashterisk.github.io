@@ -26,7 +26,7 @@ export const privacyPolicy: LegalDoc = {
       id: 'who-we-are',
       heading: 'Who we are',
       paragraphs: [
-        "The Site is the home of Ashterisk, a YouTube channel documenting AI project builds, tool reviews, and one engineer's move from Android to AI systems.",
+        "The Site is the home of Ashterisk, a YouTube channel documenting AI project builds, tool reviews, and one engineer's move from mobile to AI systems.",
         `You can reach us at ${EMAIL}.`,
       ],
     },

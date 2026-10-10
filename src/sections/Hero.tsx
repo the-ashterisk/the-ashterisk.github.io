@@ -58,9 +58,16 @@ export function Hero() {
         <motion.div {...motionProps}>
           <motion.span
             {...childProps}
-            className="mb-6 inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent-light/40 px-4 py-1.5 font-body text-sm text-text-secondary"
+            className="mb-6 inline-flex items-center gap-2.5 rounded-full border border-line bg-surface py-1.5 pl-3 pr-4 font-body text-sm text-text-secondary"
           >
-            <span className="text-accent">*</span> Android engineer → AI systems engineer
+            {/* Live-status dot; the ping ring is skipped under reduced motion. */}
+            <span aria-hidden className="relative flex h-2 w-2">
+              {!reduced && <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />}
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
+            </span>
+            <span>
+              Mobile engineer, now building <span className="font-medium text-text">AI systems</span>
+            </span>
           </motion.span>
 
           <h1 className="font-display text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
@@ -74,7 +81,7 @@ export function Hero() {
           </h1>
 
           <motion.p {...childProps} className="mt-6 max-w-md font-body text-lg text-text-secondary">
-            AI build breakdowns, tool reviews, and one engineer's jump from Android to AI systems —
+            AI build breakdowns, tool reviews, and one engineer's jump from mobile to AI systems —
             documented as it happens.
           </motion.p>
 
