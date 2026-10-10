@@ -95,17 +95,22 @@ export const hubMeta: Meta = {
   ogImage: ogImagePath('hub'),
 }
 
+/** Short links only appear in YouTube Shorts, so landing through one counts as YouTube. */
+export function shortLinkTarget(r: ToolkitResource): string {
+  return `${pagePath(r)}?utm_source=youtube&utm_medium=shortlink`
+}
+
 // Short links keep the target's preview tags so a pasted /audit still previews
 // properly, then hand off instantly. meta refresh covers no-JS webviews.
 function redirectHtml(r: ToolkitResource): string {
-  const target = pagePath(r)
-  const body = `<p style="font-family:system-ui,sans-serif;padding:2rem 1rem">Taking you to <a href="${target}">${escapeHtml(r.title)}</a>…</p>
+  const target = shortLinkTarget(r)
+  const body = `<p style="font-family:system-ui,sans-serif;padding:2rem 1rem">Taking you to <a href="${escapeHtml(target)}">${escapeHtml(r.title)}</a>…</p>
     <script>location.replace(${JSON.stringify(target)} + location.hash)</script>`
   return documentHtml(
     { ...resourceMeta(r), noindex: true },
     '',
     body,
-    `\n    <meta http-equiv="refresh" content="0; url=${target}" />`,
+    `\n    <meta http-equiv="refresh" content="0; url=${escapeHtml(target)}" />`,
   )
 }
 

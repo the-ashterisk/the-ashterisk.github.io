@@ -1,5 +1,5 @@
 import { INSTAGRAM_PROFILE, SITE_URL, filePath, toolkitResources, pagePath, resourceContent, sortedResources } from '../data/toolkit'
-import { buildPages, type StaticFile } from './pages'
+import { buildPages, shortLinkTarget, type StaticFile } from './pages'
 
 const ASSETS = '<link rel="stylesheet" href="/assets/toolkit.css" />'
 const files = buildPages(ASSETS)
@@ -108,13 +108,18 @@ test('hub lists every freebie newest first, each with its reel', () => {
   expect(doc.querySelectorAll('main a[target=_blank]')).toHaveLength(toolkitResources.length)
 })
 
-test('short links redirect to their page without JS and stay out of search', () => {
+test('short links tag the visit as YouTube, redirect without JS, and stay out of search', () => {
   for (const r of toolkitResources) {
+    const target = `${pagePath(r)}?utm_source=youtube&utm_medium=shortlink`
+    expect(shortLinkTarget(r)).toBe(target)
     const doc = page(`${r.shortLink}/index.html`)
-    expect(doc.querySelector('meta[http-equiv=refresh]')?.getAttribute('content')).toBe(`0; url=${pagePath(r)}`)
+    expect(doc.querySelector('meta[http-equiv=refresh]')?.getAttribute('content')).toBe(`0; url=${target}`)
+    const scripts = [...doc.querySelectorAll('script')].map((s) => s.textContent ?? '')
+    expect(scripts.some((s) => s.includes(`location.replace(${JSON.stringify(target)} + location.hash)`))).toBe(true)
     expect(doc.querySelector('link[rel=canonical]')?.getAttribute('href')).toBe(`${SITE_URL}${pagePath(r)}`)
     expect(meta(doc, 'robots')).toBe('noindex')
-    expect(doc.querySelector(`a[href="${pagePath(r)}"]`)).not.toBeNull()
+    // Compare attributes directly: jsdom's selector engine trips on the & in the query string.
+    expect([...doc.querySelectorAll('a')].map((a) => a.getAttribute('href'))).toContain(target)
   }
 })
 
