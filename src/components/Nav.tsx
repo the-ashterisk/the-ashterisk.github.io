@@ -3,12 +3,13 @@ import { ThemeToggle } from './ThemeToggle'
 import { Magnetic } from '../motion/Magnetic'
 import { useScrollDirection } from '../motion/useScrollDirection'
 import { usePrefersReducedMotion } from '../theme/useReducedMotion'
+import { sectionHref } from '../lib/sectionHref'
 import ash from '../assets/ash.png'
 
 const anchors = [
-  { label: 'Projects', href: '#projects' },
-  { label: 'About', href: '#about' },
-  { label: 'Connect', href: '#connect' },
+  { label: 'Projects', id: 'projects' },
+  { label: 'About', id: 'about' },
+  { label: 'Connect', id: 'connect' },
 ]
 
 export function Nav() {
@@ -24,7 +25,7 @@ export function Nav() {
     >
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
         <a
-          href="#top"
+          href={sectionHref('top')}
           className="flex items-center gap-2 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >
           <img src={ash} alt="Ashterisk mascot" className="h-9 w-9 rounded-full object-cover" />
@@ -33,8 +34,8 @@ export function Nav() {
         <div className="hidden items-center gap-8 md:flex">
           {anchors.map((a) => (
             <a
-              key={a.href}
-              href={a.href}
+              key={a.id}
+              href={sectionHref(a.id)}
               className="relative rounded font-body text-sm text-text-secondary transition-colors after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-300 hover:text-text hover:after:scale-x-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
               {a.label}
