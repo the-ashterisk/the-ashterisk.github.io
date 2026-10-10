@@ -20,7 +20,7 @@ export const privacyPolicy: LegalDoc = {
   title: 'Privacy Policy',
   lastUpdated: LEGAL_LAST_UPDATED,
   intro:
-    'This Privacy Policy explains how Ashterisk ("we", "us") handles information when you visit the-ashterisk.github.io (the "Site"). The short version: we don\'t collect any personal data. We count visits and Copy and Download clicks anonymously, without cookies, to see which resources are useful.',
+    'This Privacy Policy explains how Ashterisk ("we", "us") handles information when you visit the-ashterisk.github.io (the "Site"). The short version: we don\'t collect anything that identifies you. We count visits and Copy and Download clicks anonymously, without cookies, to see which resources are useful.',
   sections: [
     {
       id: 'who-we-are',
@@ -34,7 +34,8 @@ export const privacyPolicy: LegalDoc = {
       id: 'information-we-collect',
       heading: 'Information we collect',
       paragraphs: [
-        'We do not collect, store, or sell any personal information through the Site. There are no accounts, sign-up forms, comment sections, or contact forms.',
+        'There are no accounts, sign-up forms, comment sections, or contact forms, and we never ask for your name or email address. We do not sell any information.',
+        'The only information the Site collects is anonymous usage analytics, described under "Cookies, analytics, and tracking" below.',
       ],
     },
     {
@@ -52,7 +53,7 @@ export const privacyPolicy: LegalDoc = {
       heading: 'Cookies, analytics, and tracking',
       paragraphs: [
         'The Site does not use cookies or advertising pixels, and it stores nothing in your browser for analytics.',
-        'We use PostHog to count visits anonymously. For each page you open, it records the page, the site or campaign link that sent you (for example a YouTube or Instagram link), your browser and device type, and whether you copied or downloaded a toolkit file.',
+        'We use PostHog to count visits anonymously. For each page you open, it records the page, the site or campaign link that sent you (for example a YouTube or Instagram link), your browser, device and screen type, your language and time zone, and whether you copied or downloaded a toolkit file. PostHog processes this data in the United States.',
         "PostHog does not keep your IP address. To tell one visit from another without cookies, it turns your IP address and browser into a one-way code that changes every day and cannot be turned back into either. We never sell this data or use it for advertising. PostHog's privacy policy is at https://posthog.com/privacy.",
         'Fonts and images are served from the Site itself, so loading a page does not contact services such as Google Fonts. The only outside service a page contacts is PostHog, as described above.',
       ],

@@ -64,3 +64,17 @@ test('privacy policy discloses cookieless PostHog analytics', () => {
 test('privacy policy no longer claims pages contact no third party', () => {
   expect(privacySection('cookies-and-tracking')).toMatch(/only outside service a page contacts is PostHog/i)
 })
+
+test('privacy policy does not deny collecting what the analytics section describes', () => {
+  const text = [privacyPolicy.intro, privacySection('information-we-collect')].join(' ')
+  expect(text).not.toMatch(/don't collect any personal data|do not collect, store, or sell any personal information/i)
+  expect(privacySection('information-we-collect')).toMatch(/analytics/i)
+})
+
+test('analytics disclosure lists everything PostHog records and where it is processed', () => {
+  const text = privacySection('cookies-and-tracking')
+  expect(text).toMatch(/screen/i)
+  expect(text).toMatch(/language/i)
+  expect(text).toMatch(/time ?zone/i)
+  expect(text).toMatch(/United States/)
+})
