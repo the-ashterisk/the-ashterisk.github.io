@@ -32,6 +32,15 @@ test('section links and logo point home from a legal page', () => {
     </ThemeProvider>,
   )
   expect(screen.getByRole('link', { name: 'Projects' })).toHaveAttribute('href', '/#projects')
-  expect(screen.getByRole('link', { name: 'Connect' })).toHaveAttribute('href', '/#connect')
   expect(screen.getByRole('link', { name: /ashterisk mascot/i })).toHaveAttribute('href', '/#top')
+})
+
+test('connect jumps to the footer on the current page, since every page has one', () => {
+  window.history.pushState({}, '', '/privacy/')
+  render(
+    <ThemeProvider>
+      <Nav />
+    </ThemeProvider>,
+  )
+  expect(screen.getByRole('link', { name: 'Connect' })).toHaveAttribute('href', '#connect')
 })

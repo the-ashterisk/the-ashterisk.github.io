@@ -6,10 +6,11 @@ import { usePrefersReducedMotion } from '../theme/useReducedMotion'
 import { sectionHref } from '../lib/sectionHref'
 import ash from '../assets/ash.png'
 
+// Projects/About live only on the home page; the footer (#connect) is on every page.
 const anchors = [
-  { label: 'Projects', id: 'projects' },
-  { label: 'About', id: 'about' },
-  { label: 'Connect', id: 'connect' },
+  { label: 'Projects', href: () => sectionHref('projects') },
+  { label: 'About', href: () => sectionHref('about') },
+  { label: 'Connect', href: () => '#connect' },
 ]
 
 export function Nav() {
@@ -34,8 +35,8 @@ export function Nav() {
         <div className="hidden items-center gap-8 md:flex">
           {anchors.map((a) => (
             <a
-              key={a.id}
-              href={sectionHref(a.id)}
+              key={a.label}
+              href={a.href()}
               className="relative rounded font-body text-sm text-text-secondary transition-colors after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-300 hover:text-text hover:after:scale-x-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
               {a.label}
