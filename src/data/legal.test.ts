@@ -50,3 +50,17 @@ test("children's section does not contradict the email section", () => {
   expect(privacySection('children')).not.toMatch(/from anyone/i)
   expect(privacySection('children')).toMatch(/from children/i)
 })
+
+test('privacy policy discloses cookieless PostHog analytics', () => {
+  const text = privacySection('cookies-and-tracking')
+  expect(text).not.toMatch(/does not use cookies, analytics tools/i)
+  expect(text).toMatch(/PostHog/)
+  expect(text).toMatch(/does not use cookies/i)
+  expect(text).toMatch(/IP address/i)
+  expect(text).toContain('https://posthog.com/privacy')
+  expect(privacyPolicy.intro).toMatch(/anonymously/i)
+})
+
+test('privacy policy no longer claims pages contact no third party', () => {
+  expect(privacySection('cookies-and-tracking')).toMatch(/only outside service a page contacts is PostHog/i)
+})

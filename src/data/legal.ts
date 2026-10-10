@@ -14,13 +14,13 @@ export interface LegalDoc {
 }
 
 // Bump this whenever either document's wording changes.
-export const LEGAL_LAST_UPDATED = '10 October 2026'
+export const LEGAL_LAST_UPDATED = '11 October 2026'
 
 export const privacyPolicy: LegalDoc = {
   title: 'Privacy Policy',
   lastUpdated: LEGAL_LAST_UPDATED,
   intro:
-    'This Privacy Policy explains how Ashterisk ("we", "us") handles information when you visit the-ashterisk.github.io (the "Site"). The short version: we don\'t collect any personal data.',
+    'This Privacy Policy explains how Ashterisk ("we", "us") handles information when you visit the-ashterisk.github.io (the "Site"). The short version: we don\'t collect any personal data. We count visits and Copy and Download clicks anonymously, without cookies, to see which resources are useful.',
   sections: [
     {
       id: 'who-we-are',
@@ -51,8 +51,10 @@ export const privacyPolicy: LegalDoc = {
       id: 'cookies-and-tracking',
       heading: 'Cookies, analytics, and tracking',
       paragraphs: [
-        'The Site does not use cookies, analytics tools, advertising pixels, or any other tracking technology.',
-        'All fonts and images are served from the Site itself, so loading a page does not contact third-party services such as Google Fonts.',
+        'The Site does not use cookies or advertising pixels, and it stores nothing in your browser for analytics.',
+        'We use PostHog to count visits anonymously. For each page you open, it records the page, the site or campaign link that sent you (for example a YouTube or Instagram link), your browser and device type, and whether you copied or downloaded a toolkit file.',
+        "PostHog does not keep your IP address. To tell one visit from another without cookies, it turns your IP address and browser into a one-way code that changes every day and cannot be turned back into either. We never sell this data or use it for advertising. PostHog's privacy policy is at https://posthog.com/privacy.",
+        'Fonts and images are served from the Site itself, so loading a page does not contact services such as Google Fonts. The only outside service a page contacts is PostHog, as described above.',
       ],
     },
     {
