@@ -53,3 +53,12 @@ test('header navigation is named for screen readers', () => {
   )
   expect(screen.getByRole('navigation', { name: 'Main' })).toBeInTheDocument()
 })
+
+test('links to the free hub', () => {
+  render(
+    <ThemeProvider>
+      <Nav />
+    </ThemeProvider>,
+  )
+  expect(screen.getByRole('link', { name: 'Free' })).toHaveAttribute('href', '/free/')
+})

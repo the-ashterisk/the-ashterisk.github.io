@@ -62,6 +62,11 @@ export function Footer() {
                     </a>
                   </li>
                 ))}
+                <li>
+                  <a href="/free/" className={linkCls}>
+                    Free stuff
+                  </a>
+                </li>
               </ul>
             </nav>
 

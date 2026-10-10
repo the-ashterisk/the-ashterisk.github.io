@@ -57,3 +57,9 @@ test('copyright sits outside the legal navigation', () => {
   const copyright = screen.getByText(`© ${new Date().getFullYear()} Ashterisk`)
   expect(legal).not.toContainElement(copyright)
 })
+
+test('explore column links to the free hub', () => {
+  render(<Footer />)
+  const explore = screen.getByRole('navigation', { name: 'Explore' })
+  expect(within(explore).getByRole('link', { name: 'Free stuff' })).toHaveAttribute('href', '/free/')
+})
