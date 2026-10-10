@@ -20,10 +20,15 @@ npm run build    # tsc -b && vite build → dist/
 ```
 
 ## Layout
-- `src/App.tsx` — page order: Preloader, Nav, Hero, Projects, About, Connect (footer).
+- Multi-page build: `index.html` (home), `privacy/index.html`, `terms/index.html` → entries in
+  `src/pages/`, all mounted via `renderPage()` (theme + smooth scroll + global CSS). New page = new HTML
+  file + entry + `build.rollupOptions.input` in `vite.config.ts`.
+- `src/App.tsx` — home page order: Preloader, Nav, Hero, Projects, About, Footer (`id="connect"`).
 - `src/sections/` — page sections. `src/components/` — reusable UI primitives.
 - `src/motion/` — motion primitives (Reveal, Magnetic, ParallaxTilt, Spotlight, Preloader, SmoothScroll).
 - `src/data/` — all content. Add a project by appending to `projects.ts`; socials/email live in `links.ts`.
+  Legal copy lives in `legal.ts` — bump `LEGAL_LAST_UPDATED` on any wording change.
+- `src/lib/` — `sectionHref(id)`: use it for any link to a home-page section so it works from other pages.
 - `src/theme/` — `tokens.css` (CSS variables), `ThemeProvider` (`.dark` class on `<html>`, persisted in localStorage, defaults dark).
 
 ## Conventions

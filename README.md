@@ -22,6 +22,10 @@ Append one object to `src/data/projects.ts` — no component changes needed:
 { title: '...', description: '...', tags: ['...'], repoUrl: 'https://github.com/...', videoUrl: '...' }
 ```
 
+## Legal pages
+`/privacy/` and `/terms/` are separate Vite entries (`privacy/index.html`, `terms/index.html`).
+Their text lives in `src/data/legal.ts` — edit it there and bump `LEGAL_LAST_UPDATED`.
+
 ## Deploy
 Pushing to `main` triggers `.github/workflows/deploy.yml`, which builds and publishes to
 GitHub Pages. In the repo: Settings → Pages → Source = "GitHub Actions" (one-time setup).
