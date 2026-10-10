@@ -6,10 +6,12 @@ import { usePrefersReducedMotion } from '../theme/useReducedMotion'
 import { sectionHref } from '../lib/sectionHref'
 import ash from '../assets/ash.png'
 
-// Projects/About live only on the home page; the footer (#connect) is on every page.
+// Projects/About live only on the home page; the footer (#connect) is on every page;
+// The toolkit is its own static section at /toolkit/.
 const anchors = [
   { label: 'Projects', href: () => sectionHref('projects') },
   { label: 'About', href: () => sectionHref('about') },
+  { label: 'Toolkit', href: () => '/toolkit/' },
   { label: 'Connect', href: () => '#connect' },
 ]
 

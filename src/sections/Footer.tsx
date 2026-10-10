@@ -62,6 +62,11 @@ export function Footer() {
                     </a>
                   </li>
                 ))}
+                <li>
+                  <a href="/toolkit/" className={linkCls}>
+                    Toolkit
+                  </a>
+                </li>
               </ul>
             </nav>
 
