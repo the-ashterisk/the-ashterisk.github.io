@@ -32,10 +32,14 @@ npm run build    # tsc -b && vite build → dist/
 - `src/data/` — all content. Add a project by appending to `projects.ts`; socials/email live in `links.ts`.
   Legal copy lives in `legal.ts` — bump `LEGAL_LAST_UPDATED` on any wording change.
 - `src/lib/` — `sectionHref(id)`: use it for any link to a home-page section so it works from other pages.
+  `analytics.ts` / `trafficSource.ts` — see **Analytics** below.
 - `/toolkit` "The Toolkit" (freebies promised in reels) — **prerendered static HTML**, not React-mounted
   pages (link previews and direct DM links need real files). `build/toolkitPages.ts` (Vite plugin) emits
   `/toolkit/`, each `/toolkit/<slug>/`, the raw `.md`, short-link redirects (`/claude`, `/audit`,
   `/prompts`) and `404.html` from `src/toolkit/pages.tsx`; in dev it serves the same via middleware.
+  Short links forward to `/toolkit/<slug>/?utm_source=youtube&utm_medium=shortlink` (`shortLinkTarget`):
+  they only appear in YouTube Shorts. The plugin also emits `modulepreload` tags for the client entry's
+  shared chunks (`entryAssetTags`) so they don't load in a waterfall.
   - **Content:** `src/content/toolkit/<slug>.md` is the single source — the rendered panel, Copy and
     Download (`/toolkit/<slug>/<fileName>`) all read it. Edit content only there.
   - **Metadata:** `src/data/toolkit.ts` → `toolkitResources`, one entry per item: `slug`, `shortLink`,
@@ -48,8 +52,26 @@ npm run build    # tsc -b && vite build → dist/
   - **Add an item:** the `.md` + one entry + `npm run og`. Tests guard short-link collisions
     (`RESERVED_ROOT_PATHS`), missing files and broken internal links.
   - Browser JS for these pages is only `src/toolkit/client.ts` (Copy, expand, theme toggle, Instagram
-    download hint).
+    download hint, analytics events, and `carryCampaign`, which copies `utm_*` params onto links
+    between toolkit pages so a hub → item visit keeps its source).
 - `src/theme/` — `tokens.css` (CSS variables), `ThemeProvider` (`.dark` class on `<html>`, persisted in localStorage, defaults dark).
+
+## Analytics (PostHog, cookieless)
+- `src/lib/analytics.ts` is the **only** file that may import PostHog. It exposes `initAnalytics()`
+  (called by `renderPage()` and `toolkit/client.ts`) and `track(event, props, { beacon })`.
+- Runs **only in production builds** (`import.meta.env.PROD`): `npm run dev`, tests and CI send
+  nothing. To test for real: `npm run build && npm run preview` (launch config `ashterisk-preview`).
+- Performance contract: PostHog (`posthog-js/dist/module.slim.no-external`, pinned exact) is
+  dynamically imported after `load` + idle; `track()` calls before that are queued (max 50); every
+  failure is swallowed. Never import it statically or let it block Copy/Download.
+- Lean config in `POSTHOG_CONFIG`: `cookieless_mode: 'always'`, no autocapture/replay/heatmaps/
+  surveys/web vitals/flags. Pageview is sent by hand after `register()` so it carries `traffic_source`.
+- Events: `$pageview`, `toolkit_copied` (`slug`, `type`, `success`), `toolkit_downloaded` (`slug`,
+  `type`, sent via sendBeacon). Every event has `traffic_source` (`youtube`|`instagram`|`other`, from
+  `trafficSource()`: utm tag → Instagram webview UA → referrer) and `in_app_browser`.
+- PostHog project 656718 (US cloud) has cookieless server hash mode on and IPs discarded — events
+  are dropped if hash mode is turned off. Adding an event or property? Update the privacy policy
+  (`legal.ts`, bump `LEGAL_LAST_UPDATED`) in the same PR.
 
 ## Conventions
 - **Colors via tokens only.** Use Tailwind's `bg`, `surface`, `text`, `text-secondary`, `accent`,
