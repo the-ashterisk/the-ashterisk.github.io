@@ -64,7 +64,7 @@ export function Footer() {
                 ))}
                 <li>
                   <a href="/free/" className={linkCls}>
-                    Free stuff
+                    Toolkit
                   </a>
                 </li>
               </ul>

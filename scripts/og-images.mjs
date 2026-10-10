@@ -1,5 +1,5 @@
 // Generates the 1200×630 link-preview images for /free into public/free/og/.
-// Run by hand after adding or renaming a freebie: `npm run og`. The PNGs are
+// Run by hand after adding or renaming a toolkit entry: `npm run og`. The PNGs are
 // committed, so the normal build never needs Chrome.
 //
 // Renders an HTML card per image with the brand fonts and screenshots it with
@@ -38,7 +38,6 @@ body {
   border-radius: 999px; padding: 10px 24px; }
 .dot { width: 12px; height: 12px; border-radius: 50%; background: #ff5244; }
 h1 { font: 700 84px/1.04 'Space Grotesk'; letter-spacing: -1.5px; margin-top: 40px; max-width: 1000px; }
-h1 .star { color: #ff5244; }
 p { font-size: 32px; line-height: 1.35; color: #555; margin-top: 24px; max-width: 900px; }
 .brand { margin-top: auto; display: flex; align-items: center; gap: 16px;
   font: 700 32px 'Space Grotesk'; letter-spacing: 5px; }
@@ -46,7 +45,7 @@ p { font-size: 32px; line-height: 1.35; color: #555; margin-top: 24px; max-width
 .brand span.url { margin-left: auto; font: 500 26px 'Space Grotesk'; letter-spacing: 0; color: #555; }
 </style></head><body>
 <div class="eyebrow"><span class="dot"></span>${esc(eyebrow)}</div>
-<h1>${esc(title).replace(/-/g, "\u2011")}<span class="star">*</span></h1>
+<h1>${esc(title).replace(/-/g, "\u2011")}</h1>
 <p>${esc(subtitle)}</p>
 <div class="brand"><img src="${mascot}" alt=""><span>ashterisk</span><span class="url">the-ashterisk.github.io/free</span></div>
 </body></html>`
@@ -55,11 +54,11 @@ p { font-size: 32px; line-height: 1.35; color: #555; margin-top: 24px; max-width
 const cards = [
   ...data.freeResources.map((r) => ({
     slug: r.slug,
-    eyebrow: `Free ${r.type.toLowerCase()}`,
+    eyebrow: `The Toolkit · ${r.type}`,
     title: r.title,
     subtitle: r.description,
   })),
-  { slug: 'hub', eyebrow: 'Free · no signup', title: 'Free stuff', subtitle: 'Templates, checklists and prompts from the Ashterisk reels.' },
+  { slug: 'hub', eyebrow: 'Templates · Checklists · Prompts', title: 'The Toolkit', subtitle: 'Templates, checklists and prompts for building with AI.' },
 ]
 
 mkdirSync(outDir, { recursive: true })

@@ -20,7 +20,7 @@ function FreeHeader() {
             href="/free/"
             className={`grid min-h-[44px] place-items-center rounded-full px-3 font-body text-sm text-text-secondary transition-colors hover:text-text ${focusRing}`}
           >
-            Free
+            Toolkit
           </a>
           <StaticThemeToggle />
         </div>
@@ -37,7 +37,7 @@ function FreeFooter({ others }: { others: FreeResource[] }) {
         <h2 className="font-display text-2xl font-bold sm:text-3xl">
           Follow <span className="text-accent">@</span>the.ashterisk
         </h2>
-        <p className="mt-2 font-body text-text-secondary">New freebies drop with new reels.</p>
+        <p className="mt-2 font-body text-text-secondary">New tools land with new reels.</p>
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
           <a href={INSTAGRAM_PROFILE} target="_blank" rel="noreferrer" className={solidButton}>
             <SiInstagram size={18} aria-hidden /> Follow on Instagram
@@ -48,8 +48,8 @@ function FreeFooter({ others }: { others: FreeResource[] }) {
         </div>
 
         {others.length > 0 && (
-          <nav aria-label="More freebies" className="mt-12">
-            <h2 className="font-display text-sm font-bold uppercase tracking-widest">More freebies</h2>
+          <nav aria-label="More from the toolkit" className="mt-12">
+            <h2 className="font-display text-sm font-bold uppercase tracking-widest">More from the toolkit</h2>
             <ul className="mt-4 divide-y divide-line border-y border-line">
               {others.map((r) => (
                 <li key={r.slug}>

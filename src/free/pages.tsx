@@ -81,7 +81,7 @@ function documentHtml(meta: Meta, assetTags: string, body: string, extraHead = '
 const render = (el: ReactElement) => renderToStaticMarkup(el)
 
 export const resourceMeta = (r: FreeResource): Meta => ({
-  title: `${r.title} — free from ashterisk`,
+  title: `${r.title} — The Ashterisk Toolkit`,
   description: r.description,
   path: pagePath(r),
   ogImage: ogImagePath(r.slug),
@@ -89,8 +89,8 @@ export const resourceMeta = (r: FreeResource): Meta => ({
 })
 
 export const hubMeta: Meta = {
-  title: 'Free stuff — ashterisk',
-  description: 'Templates, checklists and prompts from the Ashterisk reels. No signup: copy it, download it, use it.',
+  title: 'The Toolkit — ashterisk',
+  description: 'Templates, checklists and prompts for building with AI, from the Ashterisk reels.',
   path: '/free/',
   ogImage: ogImagePath('hub'),
 }
@@ -143,7 +143,7 @@ export function buildPages(assetTags: string): StaticFile[] {
     source: documentHtml(
       {
         title: 'Page not found — ashterisk',
-        description: "That page doesn't exist. Find the free templates, checklists and prompts here.",
+        description: "That page doesn't exist. Find the templates, checklists and prompts in the toolkit.",
         ogImage: ogImagePath('hub'),
         noindex: true,
       },

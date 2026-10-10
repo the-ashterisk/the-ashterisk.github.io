@@ -7,11 +7,11 @@ import { sectionHref } from '../lib/sectionHref'
 import ash from '../assets/ash.png'
 
 // Projects/About live only on the home page; the footer (#connect) is on every page;
-// Free is its own static section at /free/.
+// The toolkit is its own static section at /free/.
 const anchors = [
   { label: 'Projects', href: () => sectionHref('projects') },
   { label: 'About', href: () => sectionHref('about') },
-  { label: 'Free', href: () => '/free/' },
+  { label: 'Toolkit', href: () => '/free/' },
   { label: 'Connect', href: () => '#connect' },
 ]
 

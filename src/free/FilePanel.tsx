@@ -25,10 +25,7 @@ export function FilePanel({ fileName, raw, html }: FilePanelProps) {
         >
           <Copy size={16} aria-hidden className="text-accent group-[.is-copied]:hidden" />
           <Check size={16} aria-hidden className="hidden text-accent group-[.is-copied]:block" />
-          {/* Fixed width so "Copied" doesn't shift the bar or truncate the filename. */}
-          <span data-copy-label className="inline-block min-w-[3.25rem] text-left">
-            Copy
-          </span>
+          <span data-copy-label>Copy</span>
         </button>
         <button
           type="button"

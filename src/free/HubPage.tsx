@@ -16,7 +16,7 @@ function HubCard({ resource: r }: { resource: FreeResource }) {
       <p className="mt-2 flex-1 font-body text-text-secondary">{r.description}</p>
       <div className="mt-5 flex items-center justify-between gap-4">
         <span aria-hidden className="inline-flex items-center gap-1.5 font-display text-sm font-medium">
-          Get it <ArrowRight size={16} className="text-accent transition-transform motion-safe:group-hover:translate-x-0.5" />
+          Open <ArrowRight size={16} className="text-accent transition-transform motion-safe:group-hover:translate-x-0.5" />
         </span>
         <a
           href={r.reel.instagram ?? INSTAGRAM_PROFILE}
@@ -36,10 +36,10 @@ export function HubPage({ resources }: { resources: FreeResource[] }) {
     <FreeLayout>
       <div className="mx-auto max-w-3xl px-4 pb-16 pt-10 sm:px-5 sm:pt-16">
         <h1 className="font-display text-5xl font-bold leading-tight sm:text-6xl">
-          Free stuff<span className="text-accent">*</span>
+          The Toolkit
         </h1>
         <p className="mt-4 max-w-xl font-body text-lg leading-relaxed text-text-secondary">
-          Templates, checklists and prompts from my reels. No signup. Copy it, download it, use it.
+          Templates, checklists and prompts I use when building with AI. Copy them straight into your next project.
         </p>
         <ul className="mt-10 grid gap-4">
           {resources.map((r) => (

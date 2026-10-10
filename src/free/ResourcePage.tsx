@@ -22,7 +22,7 @@ export function ResourcePage({ resource: r, raw, html, others }: ResourcePagePro
           href="/free/"
           className={`inline-flex min-h-[44px] items-center gap-1.5 rounded font-body text-sm text-text-secondary transition-colors hover:text-text ${focusRing}`}
         >
-          <ArrowLeft size={16} aria-hidden /> All freebies
+          <ArrowLeft size={16} aria-hidden /> Back to the toolkit
         </a>
 
         <header className="mt-4">
@@ -39,8 +39,10 @@ export function ResourcePage({ resource: r, raw, html, others }: ResourcePagePro
           <a href={filePath(r)} download={r.fileName} className={`${solidButton} w-full`}>
             <Download size={18} aria-hidden /> Download {r.fileName}
           </a>
-          <p className="mt-3 text-center font-body text-sm text-text-secondary">
-            Download not working? Tap ⋯ → Open in browser.
+          {/* Shown by client.ts only inside Instagram's in-app browser, which often blocks downloads. */}
+          <p data-inapp-hint hidden className="mt-3 text-center font-body text-sm text-text-secondary">
+            You&apos;re in Instagram&apos;s browser, which can block downloads. Use Copy instead, or tap the ⋯ menu
+            (top right) and choose Open in browser.
           </p>
         </div>
 

@@ -2,7 +2,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { createElement } from 'react'
 import { FilePanel } from './FilePanel'
 import { StaticThemeToggle } from './ui'
-import { init } from './client'
+import { init, initInAppHint } from './client'
 
 const RAW = '# Hello\n\n- [ ] raw markdown'
 
@@ -105,4 +105,15 @@ test('theme toggle flips .dark and remembers it like the main site', () => {
   expect(localStorage.getItem('ashterisk-theme')).toBe('dark')
   ui.theme.click()
   expect(localStorage.getItem('ashterisk-theme')).toBe('light')
+})
+
+test('the download hint only shows inside Instagram and Facebook webviews', () => {
+  const hint = document.createElement('p')
+  hint.hidden = true
+  initInAppHint(hint, 'Mozilla/5.0 (iPhone) AppleWebKit Mobile/15E148 Instagram 309.0.0')
+  expect(hint.hidden).toBe(false)
+  initInAppHint(hint, 'Mozilla/5.0 (Linux; Android 14) Chrome/120 Mobile Safari/537.36')
+  expect(hint.hidden).toBe(true)
+  initInAppHint(hint, 'Mozilla/5.0 (iPhone) [FBAN/FBIOS;FBAV/450.0]')
+  expect(hint.hidden).toBe(false)
 })

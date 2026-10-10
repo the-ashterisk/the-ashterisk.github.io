@@ -87,6 +87,13 @@ export function initFilePanel(panel: HTMLElement): void {
   sync()
 }
 
+const IN_APP_BROWSER = /Instagram|FBAN|FBAV/i
+
+/** Instagram's webview often blocks downloads; only there do we explain the way out. */
+export function initInAppHint(hint: HTMLElement, userAgent = navigator.userAgent): void {
+  hint.hidden = !IN_APP_BROWSER.test(userAgent)
+}
+
 export function initThemeToggle(button: HTMLElement): void {
   button.addEventListener('click', () => {
     const dark = document.documentElement.classList.toggle('dark')
@@ -101,6 +108,7 @@ export function initThemeToggle(button: HTMLElement): void {
 export function init(root: ParentNode = document): void {
   root.querySelectorAll<HTMLElement>('[data-file-panel]').forEach(initFilePanel)
   root.querySelectorAll<HTMLElement>('[data-theme-toggle]').forEach(initThemeToggle)
+  root.querySelectorAll<HTMLElement>('[data-inapp-hint]').forEach((hint) => initInAppHint(hint))
 }
 
 if (!import.meta.env.VITEST) init()

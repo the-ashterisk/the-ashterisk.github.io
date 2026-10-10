@@ -58,8 +58,8 @@ test('copyright sits outside the legal navigation', () => {
   expect(legal).not.toContainElement(copyright)
 })
 
-test('explore column links to the free hub', () => {
+test('explore column links to the toolkit', () => {
   render(<Footer />)
   const explore = screen.getByRole('navigation', { name: 'Explore' })
-  expect(within(explore).getByRole('link', { name: 'Free stuff' })).toHaveAttribute('href', '/free/')
+  expect(within(explore).getByRole('link', { name: 'Toolkit' })).toHaveAttribute('href', '/free/')
 })

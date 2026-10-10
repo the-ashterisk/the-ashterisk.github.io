@@ -76,12 +76,15 @@ test('resource page follows the agreed order and links its file', () => {
     const download = main.querySelector('a[download]')!
     expect(download.getAttribute('href')).toBe(filePath(r))
     expect(download.getAttribute('download')).toBe(r.fileName)
-    expect(main.textContent).toContain('Download not working? Tap ⋯ → Open in browser.')
+    // The Instagram hint ships hidden; client.ts reveals it only in the in-app browser.
+    const hint = main.querySelector<HTMLElement>('[data-inapp-hint]')!
+    expect(hint.hidden).toBe(true)
+    expect(hint.textContent).toMatch(/Open in browser/)
     expect(main.querySelectorAll('#how-to ~ ol li, section[aria-labelledby=how-to] li')).toHaveLength(3)
     // Copy reads the embedded raw markdown, not the rendered HTML.
     expect(doc.querySelector<HTMLTextAreaElement>('[data-copy-source]')?.value).toBe(resourceContent(r.slug))
     // Footer lists the other freebies but not this one.
-    const more = doc.querySelector('nav[aria-label="More freebies"]')!
+    const more = doc.querySelector('nav[aria-label="More from the toolkit"]')!
     expect(more.querySelectorAll('a')).toHaveLength(freeResources.length - 1)
     expect(more.querySelector(`a[href="${pagePath(r)}"]`)).toBeNull()
   }

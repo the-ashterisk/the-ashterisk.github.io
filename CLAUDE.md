@@ -32,7 +32,7 @@ npm run build    # tsc -b && vite build → dist/
 - `src/data/` — all content. Add a project by appending to `projects.ts`; socials/email live in `links.ts`.
   Legal copy lives in `legal.ts` — bump `LEGAL_LAST_UPDATED` on any wording change.
 - `src/lib/` — `sectionHref(id)`: use it for any link to a home-page section so it works from other pages.
-- `/free` freebie hub — **prerendered static HTML**, not React-mounted pages (link previews and
+- `/free` "The Toolkit" (freebies from reels) — **prerendered static HTML**, not React-mounted pages (link previews and
   direct DM links need real files). `build/freePages.ts` (Vite plugin) emits `/free/`, each
   `/free/<slug>/`, the raw `.md`, short-link redirects (`/claude`, `/audit`, `/prompts`) and
   `404.html` from `src/free/pages.tsx`. Add a freebie: `src/content/free/<slug>.md` + one entry in
