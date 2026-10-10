@@ -37,3 +37,16 @@ test('survives a malformed percent-encoded hash', () => {
   expect(() => render(<Page />)).not.toThrow()
   expect(scrollIntoView).not.toHaveBeenCalled()
 })
+
+describe.each(['reload', 'back_forward'])('on a %s navigation', (type) => {
+  afterEach(() => vi.restoreAllMocks())
+
+  test('leaves the browser-restored scroll position alone', () => {
+    vi.spyOn(performance, 'getEntriesByType').mockReturnValue([
+      { type } as unknown as PerformanceEntry,
+    ])
+    window.history.pushState({}, '', '/#projects')
+    render(<Page />)
+    expect(scrollIntoView).not.toHaveBeenCalled()
+  })
+})

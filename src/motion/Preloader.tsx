@@ -7,6 +7,9 @@ const EASE = [0.22, 1, 0.36, 1] as const
 export function shouldShowPreloader(): boolean {
   if (typeof window === 'undefined') return false
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false
+  // Arriving at a specific section (e.g. /#projects from a legal page): don't
+  // hold the visitor behind the intro.
+  if (window.location.hash) return false
   try {
     return sessionStorage.getItem(KEY) === null
   } catch {

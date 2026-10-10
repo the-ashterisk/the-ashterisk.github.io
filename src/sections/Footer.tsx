@@ -93,15 +93,17 @@ export function Footer() {
         </Reveal>
 
         <div className="mt-12 flex flex-col items-center gap-4 border-t border-line pt-6 sm:flex-row sm:justify-between">
-          <nav aria-label="Legal" className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
             <span className="font-body text-xs text-text-secondary">© {year} Ashterisk</span>
-            <a href="/privacy/" className={smallLinkCls}>
-              Privacy Policy
-            </a>
-            <a href="/terms/" className={smallLinkCls}>
-              Terms of Use
-            </a>
-          </nav>
+            <nav aria-label="Legal" className="flex items-center gap-x-5">
+              <a href="/privacy/" className={smallLinkCls}>
+                Privacy Policy
+              </a>
+              <a href="/terms/" className={smallLinkCls}>
+                Terms of Use
+              </a>
+            </nav>
+          </div>
           <a href="#top" className={`inline-flex items-center gap-1 ${smallLinkCls}`}>
             Back to top <ArrowUp size={14} aria-hidden />
           </a>

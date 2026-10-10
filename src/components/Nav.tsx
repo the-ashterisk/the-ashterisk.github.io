@@ -24,7 +24,7 @@ export function Nav() {
         hidden ? '-translate-y-full' : 'translate-y-0'
       }`}
     >
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
+      <nav aria-label="Main" className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
         <a
           href={sectionHref('top')}
           className="flex items-center gap-2 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
