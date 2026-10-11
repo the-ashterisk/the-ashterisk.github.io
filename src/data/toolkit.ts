@@ -94,6 +94,20 @@ export const pagePath = (r: ToolkitResource) => `/toolkit/${r.slug}/`
 export const filePath = (r: ToolkitResource) => `/toolkit/${r.slug}/${r.fileName}`
 export const ogImagePath = (slug: string) => `/toolkit/og/${slug}.png`
 
+export interface ProfileLink {
+  /** Typeable redirect at /<path>/ that lands on the hub. */
+  path: string
+  /** Where the link is posted; tags the visit so the dashboard credits it. */
+  utmSource: 'instagram' | 'youtube'
+  utmMedium: string
+}
+
+/** Clean links for the Instagram bio and YouTube profile, in place of a long tagged URL. */
+export const profileLinks: ProfileLink[] = [
+  { path: 'ig', utmSource: 'instagram', utmMedium: 'bio' },
+  { path: 'yt', utmSource: 'youtube', utmMedium: 'profile' },
+]
+
 /** Top-level paths that already exist; a short link must never take one of these. */
 export const RESERVED_ROOT_PATHS = ['toolkit', 'privacy', 'terms', 'assets', 'src', '404', 'index']
 

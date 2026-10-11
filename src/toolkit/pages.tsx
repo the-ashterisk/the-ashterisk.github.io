@@ -5,8 +5,10 @@ import {
   filePath,
   ogImagePath,
   pagePath,
+  profileLinks,
   resourceContent,
   sortedResources,
+  type ProfileLink,
   type ToolkitResource,
 } from '../data/toolkit'
 import { renderMarkdown } from './markdown'
@@ -100,14 +102,18 @@ export function shortLinkTarget(r: ToolkitResource): string {
   return `${pagePath(r)}?utm_source=youtube&utm_medium=shortlink`
 }
 
+/** /ig and /yt land on the hub, tagged with where the link was posted. */
+export function profileLinkTarget(p: ProfileLink): string {
+  return `/toolkit/?utm_source=${p.utmSource}&utm_medium=${p.utmMedium}`
+}
+
 // Short links keep the target's preview tags so a pasted /audit still previews
 // properly, then hand off instantly. meta refresh covers no-JS webviews.
-function redirectHtml(r: ToolkitResource): string {
-  const target = shortLinkTarget(r)
-  const body = `<p style="font-family:system-ui,sans-serif;padding:2rem 1rem">Taking you to <a href="${escapeHtml(target)}">${escapeHtml(r.title)}</a>…</p>
+function redirectHtml(meta: Meta, target: string, label: string): string {
+  const body = `<p style="font-family:system-ui,sans-serif;padding:2rem 1rem">Taking you to <a href="${escapeHtml(target)}">${escapeHtml(label)}</a>…</p>
     <script>location.replace(${JSON.stringify(target)} + location.hash)</script>`
   return documentHtml(
-    { ...resourceMeta(r), noindex: true },
+    { ...meta, noindex: true },
     '',
     body,
     `\n    <meta http-equiv="refresh" content="0; url=${escapeHtml(target)}" />`,
@@ -140,7 +146,14 @@ export function buildPages(assetTags: string): StaticFile[] {
       ),
     })
     files.push({ fileName: filePath(r).slice(1), source: raw })
-    files.push({ fileName: `${r.shortLink}/index.html`, source: redirectHtml(r) })
+    files.push({
+      fileName: `${r.shortLink}/index.html`,
+      source: redirectHtml(resourceMeta(r), shortLinkTarget(r), r.title),
+    })
+  }
+
+  for (const p of profileLinks) {
+    files.push({ fileName: `${p.path}/index.html`, source: redirectHtml(hubMeta, profileLinkTarget(p), 'The Toolkit') })
   }
 
   files.push({

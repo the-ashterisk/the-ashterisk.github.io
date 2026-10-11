@@ -1,4 +1,11 @@
-import { RESERVED_ROOT_PATHS, formatDate, toolkitResources, resourceContent, sortedResources } from './toolkit'
+import {
+  RESERVED_ROOT_PATHS,
+  formatDate,
+  profileLinks,
+  toolkitResources,
+  resourceContent,
+  sortedResources,
+} from './toolkit'
 
 const urlSafe = /^[a-z0-9-]+$/
 
@@ -9,7 +16,8 @@ test('slugs are unique and url-safe', () => {
 })
 
 test('short links are lowercase single words that never collide', () => {
-  const shorts = toolkitResources.map((r) => r.shortLink)
+  // Item short links and profile links share the site root.
+  const shorts = [...toolkitResources.map((r) => r.shortLink), ...profileLinks.map((p) => p.path)]
   expect(new Set(shorts).size).toBe(shorts.length)
   for (const short of shorts) {
     expect(short).toMatch(/^[a-z]+$/)
