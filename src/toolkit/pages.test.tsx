@@ -1,5 +1,14 @@
-import { INSTAGRAM_PROFILE, SITE_URL, filePath, toolkitResources, pagePath, resourceContent, sortedResources } from '../data/toolkit'
-import { buildPages, shortLinkTarget, type StaticFile } from './pages'
+import {
+  INSTAGRAM_PROFILE,
+  SITE_URL,
+  filePath,
+  toolkitResources,
+  pagePath,
+  profileLinks,
+  resourceContent,
+  sortedResources,
+} from '../data/toolkit'
+import { buildPages, profileLinkTarget, shortLinkTarget, type StaticFile } from './pages'
 
 const ASSETS = '<link rel="stylesheet" href="/assets/toolkit.css" />'
 const files = buildPages(ASSETS)
@@ -27,6 +36,7 @@ test('emits the hub, every page, raw file, short link and 404', () => {
   for (const r of toolkitResources) {
     expected.push(`toolkit/${r.slug}/index.html`, filePath(r).slice(1), `${r.shortLink}/index.html`)
   }
+  for (const p of profileLinks) expected.push(`${p.path}/index.html`)
   expect(files.map((f) => f.fileName).sort()).toEqual(expected.sort())
 })
 
@@ -119,6 +129,24 @@ test('short links tag the visit as YouTube, redirect without JS, and stay out of
     expect(doc.querySelector('link[rel=canonical]')?.getAttribute('href')).toBe(`${SITE_URL}${pagePath(r)}`)
     expect(meta(doc, 'robots')).toBe('noindex')
     // Compare attributes directly: jsdom's selector engine trips on the & in the query string.
+    expect([...doc.querySelectorAll('a')].map((a) => a.getAttribute('href'))).toContain(target)
+  }
+})
+
+test('profile links land on the hub tagged with where they were posted', () => {
+  const targets = Object.fromEntries(profileLinks.map((p) => [p.path, profileLinkTarget(p)]))
+  expect(targets).toEqual({
+    ig: '/toolkit/?utm_source=instagram&utm_medium=bio',
+    yt: '/toolkit/?utm_source=youtube&utm_medium=profile',
+  })
+  for (const p of profileLinks) {
+    const target = profileLinkTarget(p)
+    const doc = page(`${p.path}/index.html`)
+    expect(doc.querySelector('meta[http-equiv=refresh]')?.getAttribute('content')).toBe(`0; url=${target}`)
+    const scripts = [...doc.querySelectorAll('script')].map((s) => s.textContent ?? '')
+    expect(scripts.some((s) => s.includes(`location.replace(${JSON.stringify(target)} + location.hash)`))).toBe(true)
+    expect(doc.querySelector('link[rel=canonical]')?.getAttribute('href')).toBe(`${SITE_URL}/toolkit/`)
+    expect(meta(doc, 'robots')).toBe('noindex')
     expect([...doc.querySelectorAll('a')].map((a) => a.getAttribute('href'))).toContain(target)
   }
 })

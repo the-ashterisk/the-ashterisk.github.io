@@ -38,7 +38,8 @@ npm run build    # tsc -b && vite build → dist/
   `/toolkit/`, each `/toolkit/<slug>/`, the raw `.md`, short-link redirects (`/claude`, `/audit`,
   `/prompts`) and `404.html` from `src/toolkit/pages.tsx`; in dev it serves the same via middleware.
   Short links forward to `/toolkit/<slug>/?utm_source=youtube&utm_medium=shortlink` (`shortLinkTarget`):
-  they only appear in YouTube Shorts. The plugin also emits `modulepreload` tags for the client entry's
+  they only appear in YouTube Shorts. Profile links `/ig` (Instagram bio) and `/yt` (YouTube profile)
+  forward to the hub, tagged `utm_medium=bio` / `profile` (`profileLinks` in `src/data/toolkit.ts`). The plugin also emits `modulepreload` tags for the client entry's
   shared chunks (`entryAssetTags`) so they don't load in a waterfall.
   - **Content:** `src/content/toolkit/<slug>.md` is the single source — the rendered panel, Copy and
     Download (`/toolkit/<slug>/<fileName>`) all read it. Edit content only there.
